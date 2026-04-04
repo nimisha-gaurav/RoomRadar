@@ -6,6 +6,7 @@
   <title>RoomRadar | Welcome Home</title>
   <meta name="description" content="RoomRadar — Your academic sanctuary awaits. Find curated student hostel housing with ease." />
   <link rel="stylesheet" href="css/theme.css" />
+  <link rel="stylesheet" href="css/borderglow.css" />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -26,8 +27,9 @@
   </header>
 
   <!-- Auth Card -->
-  <main class="w-full max-w-md" id="auth-main">
-    <div class="bg-surface-container-lowest rounded-xl shadow-[0_32px_64px_-12px_rgba(0,0,0,0.06)] p-8 md:p-10 relative overflow-hidden">
+  <main class="w-full max-w-md border-glow-card" data-edge-sensitivity="30" data-glow-color="40 80 80" data-animated="true" id="auth-main">
+    <span class="edge-light"></span>
+    <div class="border-glow-inner bg-surface-container-lowest rounded-[28px] shadow-[0_32px_64px_-12px_rgba(0,0,0,0.06)] p-8 md:p-10 relative overflow-hidden">
       <div class="absolute top-0 right-0 w-32 h-32 bg-secondary-container/20 rounded-full blur-3xl -mr-16 -mt-16"></div>
 
       <div class="relative z-10">
@@ -91,10 +93,11 @@
       </div>
     </div>
 
-    <p class="text-center mt-8 text-on-surface-variant font-medium">
+    <p class="text-center mt-8 text-on-surface-variant font-medium relative z-10">
       Don't have an account?
       <a class="text-primary font-bold hover:underline underline-offset-4" href="#">Join RoomRadar</a>
     </p>
+    </div>
   </main>
 
   <!-- Trust Indicators -->

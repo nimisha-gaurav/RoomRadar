@@ -14,3 +14,4 @@ This file will track any changes made here.
 - Balanced top hero area relative 50/50, reducing the '124th' standing card area by roughly 20%, mapping the other 50% directly to the inventory array block size.
 - Modified block arrays to explicitly grid 4 inventory circles inline per row.
 - Switched the Room Types filter to support toggleable multi-selection (summing actual bed availability from multiple bed types dynamically inside the circles).
+- Developed a new 'Find a Roomie' networking section, complete with simulated request/accept logic that dynamically reveals user contact emails. Originally at the bottom of the dashboard, this has now been extracted out into and housed inside its own globally available top navigation URL page block ('roomies.html').

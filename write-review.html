@@ -6,6 +6,7 @@
   <title>RoomRadar | Write a Review</title>
   <meta name="description" content="Share your hostel room experience with the RoomRadar community." />
   <link rel="stylesheet" href="css/theme.css" />
+  <link rel="stylesheet" href="css/borderglow.css" />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -26,13 +27,14 @@
 <body class="bg-surface font-body text-on-surface min-h-screen">
   
   <header class="bg-surface-container-lowest/80 backdrop-blur-xl sticky top-0 z-50 flex justify-between items-center px-6 py-3 w-full border-b border-outline-variant/10">
-    <a href="dashboard.html" class="flex items-center gap-3">
+        <a href="dashboard.html" class="flex items-center gap-3">
       <span class="material-symbols-outlined text-primary text-2xl">grid_view</span>
       <span class="text-xl font-bold text-primary font-headline tracking-tight">RoomRadar</span>
     </a>
     <div class="flex items-center gap-1">
       <a href="dashboard.html" data-page="dashboard" class="nav-link"><span class="material-symbols-outlined text-[18px]">home</span><span class="hidden md:inline ml-1">Home</span></a>
-      <a href="rooms.html" data-page="rooms" class="nav-link active"><span class="material-symbols-outlined text-[18px]">search</span><span class="hidden md:inline ml-1">Rooms</span></a>
+      <a href="rooms.html" data-page="rooms" class="nav-link"><span class="material-symbols-outlined text-[18px]">search</span><span class="hidden md:inline ml-1">Rooms</span></a>
+      <a href="roomies.html" data-page="roomies" class="nav-link"><span class="material-symbols-outlined text-[18px]">group_add</span><span class="hidden md:inline ml-1">Roomie</span></a>
       <a href="predictor.html" data-page="predictor" class="nav-link"><span class="material-symbols-outlined text-[18px]">query_stats</span><span class="hidden md:inline ml-1">Predictor</span></a>
       <a href="profile.html" data-page="profile" class="nav-link"><span class="material-symbols-outlined text-[18px]">person</span><span class="hidden md:inline ml-1">Profile</span></a>
       <div class="h-6 w-px bg-outline-variant/20 mx-2 hidden sm:block"></div>

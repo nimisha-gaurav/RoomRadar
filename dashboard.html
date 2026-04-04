@@ -6,6 +6,7 @@
   <title>RoomRadar | Live Dashboard</title>
   <meta name="description" content="RoomRadar live hostel counselling dashboard — track your rank, room availability, and predicted slot in real-time." />
   <link rel="stylesheet" href="css/theme.css" />
+  <link rel="stylesheet" href="css/borderglow.css" />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -16,13 +17,14 @@
 
   <!-- Top Navigation -->
   <header class="bg-surface-container-lowest/80 backdrop-blur-xl sticky top-0 z-50 flex justify-between items-center px-6 py-3 w-full border-b border-outline-variant/10">
-    <a href="dashboard.html" class="flex items-center gap-3">
+        <a href="dashboard.html" class="flex items-center gap-3">
       <span class="material-symbols-outlined text-primary text-2xl">grid_view</span>
       <span class="text-xl font-bold text-primary font-headline tracking-tight">RoomRadar</span>
     </a>
     <div class="flex items-center gap-1">
       <a href="dashboard.html" data-page="dashboard" class="nav-link"><span class="material-symbols-outlined text-[18px]">home</span><span class="hidden md:inline ml-1">Home</span></a>
       <a href="rooms.html" data-page="rooms" class="nav-link"><span class="material-symbols-outlined text-[18px]">search</span><span class="hidden md:inline ml-1">Rooms</span></a>
+      <a href="roomies.html" data-page="roomies" class="nav-link"><span class="material-symbols-outlined text-[18px]">group_add</span><span class="hidden md:inline ml-1">Roomie</span></a>
       <a href="predictor.html" data-page="predictor" class="nav-link"><span class="material-symbols-outlined text-[18px]">query_stats</span><span class="hidden md:inline ml-1">Predictor</span></a>
       <a href="profile.html" data-page="profile" class="nav-link"><span class="material-symbols-outlined text-[18px]">person</span><span class="hidden md:inline ml-1">Profile</span></a>
       <div class="h-6 w-px bg-outline-variant/20 mx-2 hidden sm:block"></div>
@@ -40,7 +42,9 @@
     <!-- Hero Scoreboard Bento -->
     <section class="grid grid-cols-1 md:grid-cols-2 gap-6">
       <!-- Primary Metric: Rank -->
-      <div class="bg-surface-container-lowest rounded-xl p-8 flex flex-col justify-between relative overflow-hidden group border border-outline-variant/5">
+      <div class="border-glow-card" data-edge-sensitivity="30" data-glow-color="280 80 60" data-animated="false">
+        <span class="edge-light"></span>
+        <div class="border-glow-inner bg-surface-container-lowest rounded-[28px] p-8 flex flex-col justify-between relative overflow-hidden group border border-outline-variant/5 h-full w-full">
         <div class="z-10">
           <p class="font-headline text-on-surface-variant uppercase tracking-widest text-xs font-bold mb-2">Current Standing</p>
           <h1 class="text-8xl md:text-9xl font-headline font-extrabold text-primary tracking-tighter">
@@ -55,10 +59,13 @@
           <p class="text-on-surface-variant text-sm font-medium">Next call in approx. <span class="text-primary font-bold">14 mins</span></p>
         </div>
         <div class="absolute -right-16 -bottom-16 w-64 h-64 bg-primary-container/10 rounded-full blur-3xl group-hover:bg-primary-container/20 transition-colors"></div>
+        </div>
       </div>
 
       <!-- Rooms Remaining -->
-      <div class="bg-surface-container-low rounded-xl p-6 flex flex-col justify-between text-center border border-outline-variant/5 relative shrink-0">
+      <div class="border-glow-card" data-edge-sensitivity="30" data-glow-color="160 80 60" data-animated="false">
+        <span class="edge-light"></span>
+        <div class="border-glow-inner bg-surface-container-low rounded-[28px] p-6 flex flex-col justify-between text-center border border-outline-variant/5 relative shrink-0 h-full w-full">
         <p class="font-headline text-on-surface-variant uppercase tracking-widest text-xs font-bold mb-4 w-full flex justify-between items-center">
           <span>Block Inventory</span>
           <span class="bg-tertiary-container text-on-tertiary-container px-2 py-0.5 rounded text-[9px]">LIVE</span>
@@ -77,6 +84,7 @@
           <div class="flex flex-col items-center" title="Block S"><div class="relative w-16 h-16 mb-2"><svg class="w-full h-full transform -rotate-90"><circle class="text-surface-container-highest" cx="32" cy="32" fill="transparent" r="28" stroke="currentColor" stroke-width="4"></circle><circle class="text-tertiary" cx="32" cy="32" fill="transparent" r="28" stroke="currentColor" stroke-dasharray="176" stroke-dashoffset="176" stroke-width="4"></circle></svg></div><span class="text-xs font-bold text-on-surface-variant">S</span></div>
           <div class="flex flex-col items-center" title="RGT"><div class="relative w-16 h-16 mb-2"><svg class="w-full h-full transform -rotate-90"><circle class="text-surface-container-highest" cx="32" cy="32" fill="transparent" r="28" stroke="currentColor" stroke-width="4"></circle><circle class="text-tertiary" cx="32" cy="32" fill="transparent" r="28" stroke="currentColor" stroke-dasharray="176" stroke-dashoffset="176" stroke-width="4"></circle></svg></div><span class="text-xs font-bold text-on-surface-variant">RGT</span></div>
           <div class="flex flex-col items-center" title="Guest House"><div class="relative w-16 h-16 mb-2"><svg class="w-full h-full transform -rotate-90"><circle class="text-surface-container-highest" cx="32" cy="32" fill="transparent" r="28" stroke="currentColor" stroke-width="4"></circle><circle class="text-tertiary" cx="32" cy="32" fill="transparent" r="28" stroke="currentColor" stroke-dasharray="176" stroke-dashoffset="176" stroke-width="4"></circle></svg></div><span class="text-xs font-bold text-on-surface-variant">Guest</span></div>
+        </div>
         </div>
       </div>
     </section>

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RoomRadar | Roomie Finder</title>
+  <meta name="description" content="Find a room or look for roommates at VIT hostel." />
+  <link rel="stylesheet" href="css/theme.css" />
+  <link rel="stylesheet" href="css/borderglow.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script src="js/tailwind-config.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body class="bg-surface text-on-surface min-h-screen">
+
+  <!-- Top Navigation -->
+  <header class="bg-surface-container-lowest/80 backdrop-blur-xl sticky top-0 z-50 flex justify-between items-center px-6 py-3 w-full border-b border-outline-variant/10">
+        <a href="dashboard.html" class="flex items-center gap-3">
+      <span class="material-symbols-outlined text-primary text-2xl">grid_view</span>
+      <span class="text-xl font-bold text-primary font-headline tracking-tight">RoomRadar</span>
+    </a>
+    <div class="flex items-center gap-1">
+      <a href="dashboard.html" data-page="dashboard" class="nav-link"><span class="material-symbols-outlined text-[18px]">home</span><span class="hidden md:inline ml-1">Home</span></a>
+      <a href="rooms.html" data-page="rooms" class="nav-link"><span class="material-symbols-outlined text-[18px]">search</span><span class="hidden md:inline ml-1">Rooms</span></a>
+      <a href="roomies.html" data-page="roomies" class="nav-link"><span class="material-symbols-outlined text-[18px]">group_add</span><span class="hidden md:inline ml-1">Roomie</span></a>
+      <a href="predictor.html" data-page="predictor" class="nav-link"><span class="material-symbols-outlined text-[18px]">query_stats</span><span class="hidden md:inline ml-1">Predictor</span></a>
+      <a href="profile.html" data-page="profile" class="nav-link"><span class="material-symbols-outlined text-[18px]">person</span><span class="hidden md:inline ml-1">Profile</span></a>
+      <div class="h-6 w-px bg-outline-variant/20 mx-2 hidden sm:block"></div>
+      <div class="bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1">
+        <span class="w-2 h-2 bg-secondary rounded-full animate-pulse"></span>
+        LIVE
+      </div>
+      <button id="theme-toggle" class="p-2 rounded-full hover:bg-surface-container-high transition-colors active:scale-95" title="Toggle theme">
+        <span class="material-symbols-outlined text-on-surface-variant theme-icon">dark_mode</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-6 pt-8 space-y-8 pb-16">
+    <!-- Roommate Finder -->
+    <section class="space-y-6">
+      <div class="flex justify-between items-end">
+        <div>
+          <h2 class="text-2xl font-headline font-bold text-on-surface">Find a Roomie</h2>
+          <p class="text-on-surface-variant text-sm">Connect with peers to secure your ideal room</p>
+        </div>
+        <button id="open-add-roomie-modal" class="bg-primary text-on-primary font-bold text-sm hover:bg-primary/90 px-5 py-2.5 rounded-full transition-all shadow-lg flex items-center gap-2 hover:scale-[1.02] active:scale-95">
+          Create Post <span class="material-symbols-outlined text-sm">edit_square</span>
+        </button>
+      </div>
+
+      <!-- Toggle Tabs -->
+      <div class="flex bg-surface-container-highest p-1 rounded-full w-full max-w-sm">
+        <button id="tab-need-room" class="flex-1 text-sm font-bold py-2 px-4 rounded-full bg-primary text-on-primary transition-all shadow-md">
+          Need a Room
+        </button>
+        <button id="tab-need-roomie" class="flex-1 text-sm font-bold py-2 px-4 rounded-full text-on-surface-variant hover:text-on-surface transition-all">
+          Need a Roomie
+        </button>
+      </div>
+
+      <!-- Need a Room Container -->
+      <div id="container-need-room" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Incoming Request (Simulation) -->
+        <div class="border-glow-card" data-edge-sensitivity="30" data-glow-color="300 80 50">
+          <span class="edge-light"></span>
+          <div class="border-glow-inner bg-surface-container-lowest border-2 border-tertiary p-6 rounded-xl relative overflow-hidden group shadow-lg w-full h-full">
+          <div class="absolute top-0 left-0 w-full h-1 bg-tertiary"></div>
+          <div class="flex justify-between items-start mb-4">
+            <div class="flex items-center gap-3">
+              <div class="w-12 h-12 rounded-full bg-tertiary-container text-tertiary flex items-center justify-center font-bold text-xl ring-2 ring-tertiary/20">S</div>
+              <div>
+                <h4 class="font-headline font-bold text-lg leading-tight">Sneha R.</h4>
+                <p class="text-xs text-on-surface-variant">Has 2AC in Block C</p>
+              </div>
+            </div>
+            <span class="pulse-badge bg-tertiary-container text-on-tertiary-container text-[10px] px-2 py-1 rounded font-bold uppercase animate-pulse">Requesting You</span>
+          </div>
+          <div class="flex flex-wrap gap-2 mb-6">
+            <span class="px-2 py-1 text-[10px] font-bold rounded bg-surface-container text-on-surface border border-outline-variant/10">Early Bird</span>
+            <span class="px-2 py-1 text-[10px] font-bold rounded bg-surface-container text-on-surface border border-outline-variant/10">Neat Freak</span>
+            <span class="px-2 py-1 text-[10px] font-bold rounded bg-surface-container text-on-surface border border-outline-variant/10">CSE Core</span>
+          </div>
+          <button class="w-full bg-tertiary hover:bg-tertiary/90 text-on-tertiary font-bold py-2 rounded-lg transition-colors flex items-center justify-center gap-2 roomie-accept-btn">
+            Accept Request <span class="material-symbols-outlined text-sm">check_circle</span>
+          </button>
+          </div>
+        </div>
+
+        <!-- Normal Card 1 -->
+        <div class="border-glow-card" data-edge-sensitivity="30" data-glow-color="160 80 50">
+          <span class="edge-light"></span>
+          <div class="border-glow-inner bg-surface-container-lowest border border-outline-variant/5 p-6 rounded-xl hover:shadow-lg transition-shadow w-full h-full">
+          <div class="flex justify-between items-start mb-4">
+             <div class="flex items-center gap-3">
+              <div class="w-12 h-12 rounded-full bg-secondary-container text-secondary flex items-center justify-center font-bold text-xl">P</div>
+              <div>
+                <h4 class="font-headline font-bold text-lg leading-tight">Priya M.</h4>
+                <p class="text-xs text-on-surface-variant">Has 4AC in Block E</p>
+              </div>
+            </div>
+          </div>
+          <div class="flex flex-wrap gap-2 mb-6">
+             <span class="px-2 py-1 text-[10px] font-bold rounded bg-surface-container text-on-surface border border-outline-variant/10">Night Owl</span>
+             <span class="px-2 py-1 text-[10px] font-bold rounded bg-surface-container text-on-surface border border-outline-variant/10">Chill</span>
+             <span class="px-2 py-1 text-[10px] font-bold rounded bg-surface-container text-on-surface border border-outline-variant/10">Cat Lover</span>
+          </div>
+          <button class="w-full bg-primary-container hover:bg-primary-container/80 text-on-primary-container font-bold py-2 rounded-lg transition-colors flex items-center justify-center gap-2 roomie-request-btn border border-primary/10">
+            Send Request <span class="material-symbols-outlined text-sm">send</span>
+          </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Need a Roomie Container (Hidden by default) -->
+      <div id="container-need-roomie" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 hidden">
+        <div class="border-glow-card" data-edge-sensitivity="30" data-glow-color="40 80 50">
+          <span class="edge-light"></span>
+          <div class="border-glow-inner bg-surface-container-lowest border border-outline-variant/5 p-6 rounded-xl hover:shadow-lg transition-shadow w-full h-full">
+          <div class="flex justify-between items-start mb-4">
+             <div class="flex items-center gap-3">
+              <div class="w-12 h-12 rounded-full bg-primary-container text-primary flex items-center justify-center font-bold text-xl">A</div>
+              <div>
+                <h4 class="font-headline font-bold text-lg leading-tight">Anjali T.</h4>
+                <p class="text-xs text-on-surface-variant">Looking for 2NAC/4NAC</p>
+              </div>
+            </div>
+          </div>
+          <div class="flex flex-wrap gap-2 mb-6">
+             <span class="px-2 py-1 text-[10px] font-bold rounded bg-surface-container text-on-surface border border-outline-variant/10">Early Bird</span>
+             <span class="px-2 py-1 text-[10px] font-bold rounded bg-surface-container text-on-surface border border-outline-variant/10">Studious</span>
+          </div>
+          <button class="w-full bg-primary-container hover:bg-primary-container/80 text-on-primary-container font-bold py-2 rounded-lg transition-colors flex items-center justify-center gap-2 roomie-request-btn border border-primary/10">
+            Send Request <span class="material-symbols-outlined text-sm">send</span>
+          </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Add Roomie Post Modal -->
+  <div id="add-roomie-modal" class="fixed inset-0 z-[100] hidden">
+    <div class="absolute inset-0 bg-surface/80 backdrop-blur-sm" id="add-roomie-backdrop"></div>
+    <div class="absolute inset-0 flex items-center justify-center p-4 md:p-6 pointer-events-none">
+      <div class="bg-surface-container-lowest border border-outline-variant/10 rounded-2xl shadow-2xl p-6 md:p-8 w-full max-w-lg pointer-events-auto transform scale-95 opacity-0 transition-all duration-300" id="add-roomie-dialog">
+        <div class="flex justify-between items-center mb-6">
+          <h3 class="font-headline text-2xl font-bold text-on-surface">Create a Post</h3>
+          <button id="close-add-roomie-modal" type="button" class="w-8 h-8 rounded-full bg-surface-container hover:bg-surface-container-high flex items-center justify-center transition-colors">
+            <span class="material-symbols-outlined text-sm">close</span>
+          </button>
+        </div>
+        <form id="add-roomie-form" class="space-y-5">
+          <div class="grid grid-cols-1 gap-4">
+            <div>
+              <label class="block text-sm font-bold text-on-surface mb-1">Post Type</label>
+              <select id="post-type" required class="w-full bg-surface-container-low border-none rounded-lg p-3 focus:ring-2 focus:ring-primary/40 text-on-surface">
+                <option value="need-room">I Need a Room</option>
+                <option value="need-roomie">I Need a Roomie</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-bold text-on-surface mb-1">Your Name</label>
+              <input type="text" id="post-name" required class="w-full bg-surface-container-low border-none rounded-lg p-3 focus:ring-2 focus:ring-primary/40 text-on-surface" placeholder="e.g. Rahul S." />
+            </div>
+            <div>
+              <label class="block text-sm font-bold text-on-surface mb-1" id="details-label">Looking For / Room Details</label>
+              <input type="text" id="post-details" required class="w-full bg-surface-container-low border-none rounded-lg p-3 focus:ring-2 focus:ring-primary/40 text-on-surface" placeholder="e.g. Has 2AC in Block C or Looking for 4NAC" />
+            </div>
+            <div>
+              <label class="block text-sm font-bold text-on-surface mb-1">Personality Tags (Comma separated)</label>
+              <input type="text" id="post-tags" required class="w-full bg-surface-container-low border-none rounded-lg p-3 focus:ring-2 focus:ring-primary/40 text-on-surface" placeholder="e.g. Early Bird, Neat Freak, CS Core" />
+            </div>
+          </div>
+          <button type="submit" class="w-full soul-gradient text-on-primary py-3 rounded-full font-bold shadow-lg hover:scale-[1.02] active:scale-95 transition-transform mt-4">
+            Publish Post
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
