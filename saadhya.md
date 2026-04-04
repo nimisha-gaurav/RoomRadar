@@ -40,4 +40,9 @@ This file has been created as requested. Any changes or updates you ask me to tr
 - ~~Replaced the generic `grid_view` material icon with a custom uploaded logo globally across all 8 HTML page top nav bars.~~ *(Reverted to original `grid_view` icon)*
 - Updated the header text on the rooms page from "Curated Sanctuaries" to "Your Kinda Space".
 
-*(The main home page `index.html` was untouched EXCEPT for its logo header)*
+## Interactive Visuals & Form Modals
+- Built a global **Interactive Constellations Effect** spanning the background (`z-index: -10`). Utilizing pure Canvas 2D, particles interlink dynamically and explicitly react to the user's mouse position with repulsion physics and connection beams.
+- Implemented a **Pink ClickSpark Cursor Effect** across all pages, firing geometric spark beams from the exact cursor coordinate on every click using Canvas 2D.
+- Overhauled the "Add A New Room" modal within `rooms.html` to leverage standardized `<select>` dropdowns for precise `Block` and `Room Category` definitions, replacing arbitrary text inputs.
+
+*(The main home page `index.html` was untouched EXCEPT for its logo header and background visuals)*

@@ -418,6 +418,222 @@
   }
 
   // =============================================
+  // Constellations Background Effect (Canvas 2D)
+  // =============================================
+  function initConstellations() {
+    // If pixel snow container exists, remove it
+    const snowContainer = document.getElementById('pixel-snow-container');
+    if (snowContainer) snowContainer.remove();
+
+    const canvas = document.createElement('canvas');
+    canvas.id = 'constellation-canvas';
+    canvas.className = 'fixed inset-0 pointer-events-none z-[-10]';
+    document.body.appendChild(canvas);
+    
+    const ctx = canvas.getContext('2d');
+    let width = window.innerWidth;
+    let height = window.innerHeight;
+    canvas.width = width;
+    canvas.height = height;
+
+    const particles = [];
+    const particleCount = Math.min(Math.floor((width * height) / 8000), 120); // Responsive density
+    const maxVelocity = 0.5;
+    const connectionRadius = 130;
+    const mouseRadius = 150;
+
+    let mouse = { x: -1000, y: -1000 };
+
+    window.addEventListener('resize', () => {
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = width;
+      canvas.height = height;
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+    });
+
+    window.addEventListener('mouseout', () => {
+      mouse.x = -1000;
+      mouse.y = -1000;
+    });
+
+    class Particle {
+      constructor() {
+        this.x = Math.random() * width;
+        this.y = Math.random() * height;
+        this.vx = (Math.random() - 0.5) * maxVelocity * 2;
+        this.vy = (Math.random() - 0.5) * maxVelocity * 2;
+        this.radius = Math.random() * 1.5 + 0.5;
+      }
+      
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+
+        if (this.x < 0 || this.x > width) this.vx *= -1;
+        if (this.y < 0 || this.y > height) this.vy *= -1;
+
+        // Mouse interaction (slight repulsion physics)
+        const dx = mouse.x - this.x;
+        const dy = mouse.y - this.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+
+        if (dist < mouseRadius) {
+          const force = (mouseRadius - dist) / mouseRadius;
+          const ax = (dx / dist) * force * 0.05;
+          const ay = (dy / dist) * force * 0.05;
+          
+          this.vx -= ax;
+          this.vy -= ay;
+
+          // Soft cap velocity
+          const speed = Math.sqrt(this.vx * this.vx + this.vy * this.vy);
+          if (speed > maxVelocity * 2) {
+            this.vx = (this.vx / speed) * maxVelocity * 2;
+            this.vy = (this.vy / speed) * maxVelocity * 2;
+          }
+        }
+      }
+
+      draw() {
+        const isDark = document.documentElement.classList.contains("dark");
+        ctx.fillStyle = isDark ? 'rgba(255, 255, 255, 0.7)' : 'rgba(146, 63, 95, 0.5)';
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    for (let i = 0; i < particleCount; i++) {
+      particles.push(new Particle());
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, width, height);
+      
+      const isDark = document.documentElement.classList.contains("dark");
+      const lineRGB = isDark ? '255, 255, 255' : '146, 63, 95';
+
+      for (let i = 0; i < particleCount; i++) {
+        particles[i].update();
+        particles[i].draw();
+
+        // Connect particles
+        for (let j = i + 1; j < particleCount; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+
+          if (dist < connectionRadius) {
+            const opacity = 1 - (dist / connectionRadius);
+            ctx.strokeStyle = `rgba(${lineRGB}, ${opacity * 0.25})`;
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.stroke();
+          }
+        }
+
+        // Draw line to mouse
+        const dxm = particles[i].x - mouse.x;
+        const dym = particles[i].y - mouse.y;
+        const distm = Math.sqrt(dxm * dxm + dym * dym);
+
+        if (distm < mouseRadius) {
+          const opacity = 1 - (distm / mouseRadius);
+          ctx.strokeStyle = `rgba(${lineRGB}, ${opacity * 0.5})`;
+          ctx.lineWidth = 1.2;
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(mouse.x, mouse.y);
+          ctx.stroke();
+        }
+      }
+      requestAnimationFrame(animate);
+    }
+    
+    animate();
+  }
+
+  // =============================================
+  // ClickSpark (Canvas 2D Cursor Effect)
+  // =============================================
+  function initClickSpark() {
+    const canvas = document.createElement('canvas');
+    canvas.id = 'click-spark-canvas';
+    canvas.className = 'fixed inset-0 pointer-events-none z-[9999]';
+    document.body.appendChild(canvas);
+
+    const ctx = canvas.getContext('2d');
+    let sparks = [];
+    let animationId = null;
+
+    const resizeCanvas = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    const draw = (timestamp) => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      sparks = sparks.filter(spark => {
+        const elapsed = timestamp - spark.startTime;
+        if (elapsed >= 400) return false;
+
+        const progress = elapsed / 400;
+        const eased = progress * (2 - progress);
+
+        const distance = eased * 15;
+        const lineLength = 10 * (1 - eased);
+
+        const x1 = spark.x + distance * Math.cos(spark.angle);
+        const y1 = spark.y + distance * Math.sin(spark.angle);
+        const x2 = spark.x + (distance + lineLength) * Math.cos(spark.angle);
+        const y2 = spark.y + (distance + lineLength) * Math.sin(spark.angle);
+
+        // Requested Pink Color
+        ctx.strokeStyle = '#ff69b4';
+        ctx.lineWidth = 2;
+        ctx.lineCap = 'round';
+        ctx.beginPath();
+        ctx.moveTo(x1, y1);
+        ctx.lineTo(x2, y2);
+        ctx.stroke();
+
+        return true;
+      });
+
+      if (sparks.length > 0) {
+        animationId = requestAnimationFrame(draw);
+      }
+    };
+
+    document.addEventListener('click', (e) => {
+      const now = performance.now();
+      const sparkCount = 8;
+      
+      const newSparks = Array.from({ length: sparkCount }, (_, i) => ({
+        x: e.clientX,
+        y: e.clientY,
+        angle: (2 * Math.PI * i) / sparkCount,
+        startTime: now
+      }));
+
+      sparks.push(...newSparks);
+      if (sparks.length === sparkCount) {
+        animationId = requestAnimationFrame(draw);
+      }
+    });
+  }
+
+  // =============================================
   // Init on DOM ready
   // =============================================
   document.addEventListener("DOMContentLoaded", function () {
@@ -428,6 +644,8 @@
     initReviewPhotoUpload();
     initAddRoomModal();
     initBounceCards();
+    initConstellations();
+    initClickSpark();
 
     // Theme toggle click handler
     document.querySelectorAll("#theme-toggle").forEach((toggle) => {

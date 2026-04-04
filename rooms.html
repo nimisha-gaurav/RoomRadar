@@ -10,6 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   <script src="js/tailwind-config.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 <body class="bg-surface font-body text-on-surface min-h-screen">
   <!-- Header -->
@@ -214,29 +215,54 @@
           </button>
         </div>
         <form class="space-y-5" onsubmit="event.preventDefault(); alert('Room addition submitted for review! You can now start adding photos and reviews for it.'); document.getElementById('close-add-room-modal').click();">
-          <div>
-            <label class="block text-sm font-bold text-on-surface mb-1">Block &amp; Room Number</label>
-            <input type="text" required class="w-full bg-surface-container-low border-none rounded-lg p-3 focus:ring-2 focus:ring-primary/40 text-on-surface" placeholder="e.g. Block E-102" />
-          </div>
           <div class="grid grid-cols-2 gap-4">
             <div>
-              <label class="block text-sm font-bold text-on-surface mb-1">Sharing</label>
+              <label class="block text-sm font-bold text-on-surface mb-1">Block</label>
               <select required class="w-full bg-surface-container-low border-none rounded-lg p-3 focus:ring-2 focus:ring-primary/40 text-on-surface">
-                <option value="" disabled selected>Select</option>
-                <option>Single</option>
-                <option>2-Sharing</option>
-                <option>3-Sharing</option>
-                <option>Dorm</option>
+                <option value="" disabled selected>Select Block</option>
+                <option>A</option>
+                <option>B</option>
+                <option>C</option>
+                <option>D</option>
+                <option>E</option>
+                <option>E-annex</option>
+                <option>F</option>
+                <option>G</option>
+                <option>H</option>
+                <option>J</option>
+                <option>S</option>
+                <option>RGT</option>
+                <option>Guest House</option>
               </select>
             </div>
             <div>
-              <label class="block text-sm font-bold text-on-surface mb-1">Type</label>
-              <select required class="w-full bg-surface-container-low border-none rounded-lg p-3 focus:ring-2 focus:ring-primary/40 text-on-surface">
-                <option value="" disabled selected>Select</option>
-                <option>AC</option>
-                <option>Non-AC</option>
-              </select>
+              <label class="block text-sm font-bold text-on-surface mb-1">Room Number</label>
+              <input type="text" required class="w-full bg-surface-container-low border-none rounded-lg p-3 focus:ring-2 focus:ring-primary/40 text-on-surface" placeholder="e.g. 102" />
             </div>
+          </div>
+          <div>
+            <label class="block text-sm font-bold text-on-surface mb-1">Room Category</label>
+            <select required class="w-full bg-surface-container-low border-none rounded-lg p-3 focus:ring-2 focus:ring-primary/40 text-on-surface">
+                <option value="" disabled selected>Select Room Type</option>
+                <option>1AC</option>
+                <option>1NAC</option>
+                <option>2AC</option>
+                <option>2NAC</option>
+                <option>3AC</option>
+                <option>3NAC</option>
+                <option>4AC</option>
+                <option>4NAC</option>
+                <option>6AC</option>
+                <option>6NAC</option>
+                <option>2 Apt</option>
+                <option>3 Apt</option>
+                <option>4 Apt</option>
+                <option>2 NAPT</option>
+                <option>3 NAPT</option>
+                <option>4 NAPT</option>
+                <option>5 NAPT</option>
+                <option>6 NAPT</option>
+            </select>
           </div>
           <div>
             <label class="block text-sm font-bold text-on-surface mb-1">Initial Photos</label>
