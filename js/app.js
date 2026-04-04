@@ -61,6 +61,7 @@
       compare: "rooms",
       predictor: "predictor",
       profile: "profile",
+      roomies: "roomies",
     };
 
     const activeKey = navMap[page] || "";
@@ -634,6 +635,313 @@
   }
 
   // =============================================
+  // Roomie Finder Interactivity
+  // =============================================
+  function initRoomieFinder() {
+    const tabRoom = document.getElementById('tab-need-room');
+    const tabRoomie = document.getElementById('tab-need-roomie');
+    const containerRoom = document.getElementById('container-need-room');
+    const containerRoomie = document.getElementById('container-need-roomie');
+
+    if (!tabRoom || !tabRoomie) return;
+
+    tabRoom.addEventListener('click', () => {
+      tabRoom.className = "flex-1 text-sm font-bold py-2 px-4 rounded-full bg-primary text-on-primary transition-all shadow-md";
+      tabRoomie.className = "flex-1 text-sm font-bold py-2 px-4 rounded-full text-on-surface-variant hover:text-on-surface transition-all";
+      containerRoom.classList.remove('hidden');
+      containerRoomie.classList.add('hidden');
+    });
+
+    tabRoomie.addEventListener('click', () => {
+      tabRoomie.className = "flex-1 text-sm font-bold py-2 px-4 rounded-full bg-primary text-on-primary transition-all shadow-md";
+      tabRoom.className = "flex-1 text-sm font-bold py-2 px-4 rounded-full text-on-surface-variant hover:text-on-surface transition-all";
+      containerRoomie.classList.remove('hidden');
+      containerRoom.classList.add('hidden');
+    });
+
+    // Request Buttons
+    const requestBtns = document.querySelectorAll('.roomie-request-btn');
+    requestBtns.forEach(btn => {
+      btn.addEventListener('click', function() {
+        if (this.disabled) return;
+        this.disabled = true;
+        this.className = "w-full bg-surface-container-high text-on-surface-variant font-bold py-2 rounded-lg flex items-center justify-center gap-2 cursor-not-allowed border border-outline-variant/5 transition-all outline-none";
+        this.innerHTML = `Request Sent <span class="material-symbols-outlined text-sm">schedule</span>`;
+      });
+    });
+
+    // Accept Button (Simulating email reveal)
+    const acceptBtns = document.querySelectorAll('.roomie-accept-btn');
+    acceptBtns.forEach(btn => {
+      btn.addEventListener('click', function() {
+        if (this.disabled) return;
+        this.disabled = true;
+        this.className = "w-full bg-secondary-container text-on-secondary-container border border-secondary/20 font-bold py-2 rounded-lg flex items-center justify-center gap-2 break-all px-2 text-sm transition-all shadow-inner";
+        // Reveal email
+        this.innerHTML = `<span class="material-symbols-outlined text-sm">mail_lock</span> sneha.r@vit.edu`;
+        
+        // Remove the pulse notification and update status
+        const card = this.closest('.bg-surface-container-lowest');
+        if (card) {
+           const badge = card.querySelector('.pulse-badge');
+           if (badge) {
+              badge.classList.remove('animate-pulse', 'bg-tertiary-container', 'text-on-tertiary-container');
+              badge.classList.add('bg-secondary-container', 'text-on-secondary-container');
+              badge.textContent = "Connected";
+           }
+           // Swap card accent to green/secondary instead of purple
+           card.classList.remove('border-tertiary');
+           card.classList.add('border-secondary/30');
+           const topBar = card.querySelector('.bg-tertiary');
+           if (topBar) {
+              topBar.classList.replace('bg-tertiary', 'bg-secondary');
+           }
+        }
+      });
+    });
+  }
+
+  // =============================================
+  // Add Roomie Modal Interactivity
+  // =============================================
+  function initAddRoomieModal() {
+    const openBtn = document.getElementById('open-add-roomie-modal');
+    const closeBtn = document.getElementById('close-add-roomie-modal');
+    const modal = document.getElementById('add-roomie-modal');
+    const dialog = document.getElementById('add-roomie-dialog');
+    const form = document.getElementById('add-roomie-form');
+
+    if (!modal || !openBtn || !form) return;
+
+    function openModal() {
+      modal.classList.remove('hidden');
+      // Trigger reflow
+      void modal.offsetWidth;
+      dialog.classList.remove('scale-95', 'opacity-0');
+      dialog.classList.add('scale-100', 'opacity-100');
+    }
+
+    function closeModal() {
+      dialog.classList.remove('scale-100', 'opacity-100');
+      dialog.classList.add('scale-95', 'opacity-0');
+      setTimeout(() => modal.classList.add('hidden'), 300);
+    }
+
+    openBtn.addEventListener('click', openModal);
+    closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => {
+      if (e.target.id === 'add-roomie-backdrop') closeModal();
+    });
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const type = document.getElementById('post-type').value;
+      const name = document.getElementById('post-name').value;
+      const details = document.getElementById('post-details').value;
+      const tagsStr = document.getElementById('post-tags').value;
+      
+      const tagsHtml = tagsStr.split(',').map(tag => {
+        const t = tag.trim();
+        if (!t) return '';
+        return `<span class="px-2 py-1 text-[10px] font-bold rounded bg-surface-container text-on-surface border border-outline-variant/10">${t}</span>`;
+      }).join('');
+
+      const firstChar = name.charAt(0).toUpperCase();
+
+      const colors = [
+        'bg-primary-container text-primary',
+        'bg-secondary-container text-secondary', 
+        'bg-tertiary-container text-tertiary'
+      ];
+      const randColor = colors[Math.floor(Math.random() * colors.length)];
+
+      const cardHtml = `
+        <div class="bg-surface-container-lowest border border-outline-variant/5 p-6 rounded-xl hover:shadow-lg transition-shadow border-l-4 border-l-primary/50 animate-[pulse_0.5s_ease-out]">
+          <div class="flex justify-between items-start mb-4">
+             <div class="flex items-center gap-3">
+              <div class="w-12 h-12 rounded-full ${randColor} flex items-center justify-center font-bold text-xl">${firstChar}</div>
+              <div>
+                <h4 class="font-headline font-bold text-lg leading-tight">${name}</h4>
+                <p class="text-xs text-on-surface-variant">${details}</p>
+              </div>
+            </div>
+             <span class="bg-primary-container text-on-primary-container text-[10px] px-2 py-1 rounded font-bold uppercase">Just Now</span>
+          </div>
+          <div class="flex flex-wrap gap-2 mb-6">
+             ${tagsHtml}
+          </div>
+          <button class="w-full bg-primary-container hover:bg-primary-container/80 text-on-primary-container font-bold py-2 rounded-lg transition-colors flex items-center justify-center gap-2 roomie-request-btn border border-primary/10">
+            Send Request <span class="material-symbols-outlined text-sm">send</span>
+          </button>
+        </div>
+      `;
+
+      const targetContainerId = type === 'need-room' ? 'container-need-room' : 'container-need-roomie';
+      const container = document.getElementById(targetContainerId);
+      
+      if (container) {
+          container.insertAdjacentHTML('afterbegin', cardHtml);
+          
+          const newCard = container.firstElementChild;
+          const newBtn = newCard.querySelector('.roomie-request-btn');
+          if (newBtn) {
+            newBtn.addEventListener('click', function() {
+              if (this.disabled) return;
+              this.disabled = true;
+              this.className = "w-full bg-surface-container-high text-on-surface-variant font-bold py-2 rounded-lg flex items-center justify-center gap-2 cursor-not-allowed border border-outline-variant/5 transition-all outline-none";
+              this.innerHTML = `Request Sent <span class="material-symbols-outlined text-sm">schedule</span>`;
+            });
+          }
+          if (typeof initBorderGlow === 'function') {
+             initBorderGlow(newCard);
+          }
+      }
+
+      form.reset();
+      closeModal();
+    });
+  }
+
+  // =============================================
+  // BorderGlow Vanilla Implementation
+  // =============================================
+  function initBorderGlow(container = document) {
+    const parseHSL = (hslStr) => {
+      const match = hslStr.match(/([\d.]+)\s*([\d.]+)%?\s*([\d.]+)%?/);
+      if (!match) return { h: 40, s: 80, l: 80 };
+      return { h: parseFloat(match[1]), s: parseFloat(match[2]), l: parseFloat(match[3]) };
+    };
+
+    const buildGlowVars = (glowColor, intensity) => {
+      const { h, s, l } = parseHSL(glowColor);
+      const base = `${h}deg ${s}% ${l}%`;
+      const opacities = [100, 60, 50, 40, 30, 20, 10];
+      const keys = ['', '-60', '-50', '-40', '-30', '-20', '-10'];
+      const vars = {};
+      for (let i = 0; i < opacities.length; i++) {
+        vars[`--glow-color${keys[i]}`] = `hsl(${base} / ${Math.min(opacities[i] * intensity, 100)}%)`;
+      }
+      return vars;
+    };
+
+    const GRADIENT_POSITIONS = ['80% 55%', '69% 34%', '8% 6%', '41% 38%', '86% 85%', '82% 18%', '51% 4%'];
+    const GRADIENT_KEYS = ['--gradient-one', '--gradient-two', '--gradient-three', '--gradient-four', '--gradient-five', '--gradient-six', '--gradient-seven'];
+    const COLOR_MAP = [0, 1, 2, 0, 1, 2, 1];
+
+    const buildGradientVars = (colors) => {
+      const vars = {};
+      for (let i = 0; i < 7; i++) {
+          const c = colors[Math.min(COLOR_MAP[i], colors.length - 1)];
+          vars[GRADIENT_KEYS[i]] = `radial-gradient(at ${GRADIENT_POSITIONS[i]}, ${c} 0px, transparent 50%)`;
+      }
+      vars['--gradient-base'] = `linear-gradient(${colors[0]} 0 100%)`;
+      return vars;
+    };
+
+    function easeOutCubic(x) { return 1 - Math.pow(1 - x, 3); }
+    function easeInCubic(x) { return x * x * x; }
+
+    function animateValue({ start = 0, end = 100, duration = 1000, delay = 0, ease = easeOutCubic, onUpdate, onEnd }) {
+      const t0 = performance.now() + delay;
+      function tick() {
+          const elapsed = performance.now() - t0;
+          const t = Math.min(elapsed / duration, 1);
+          onUpdate(start + (end - start) * ease(t));
+          if (t < 1) requestAnimationFrame(tick);
+          else if (onEnd) onEnd();
+      }
+      setTimeout(() => requestAnimationFrame(tick), delay);
+    }
+
+    const getCenterOfElement = (el) => {
+      const { width, height } = el.getBoundingClientRect();
+      return [width / 2, height / 2];
+    };
+
+    const getEdgeProximity = (el, x, y) => {
+      const [cx, cy] = getCenterOfElement(el);
+      const dx = x - cx;
+      const dy = y - cy;
+      let kx = Infinity, ky = Infinity;
+      if (dx !== 0) kx = cx / Math.abs(dx);
+      if (dy !== 0) ky = cy / Math.abs(dy);
+      return Math.min(Math.max(1 / Math.min(kx, ky), 0), 1);
+    };
+
+    const getCursorAngle = (el, x, y) => {
+      const [cx, cy] = getCenterOfElement(el);
+      const dx = x - cx;
+      const dy = y - cy;
+      if (dx === 0 && dy === 0) return 0;
+      const radians = Math.atan2(dy, dx);
+      let degrees = radians * (180 / Math.PI) + 90;
+      if (degrees < 0) degrees += 360;
+      return degrees;
+    };
+
+    const targets = container.classList && container.classList.contains('border-glow-card') 
+        ? [container] 
+        : container.querySelectorAll('.border-glow-card');
+
+    targets.forEach(card => {
+      const edgeSensitivity = card.dataset.edgeSensitivity || 30;
+      const glowColor = card.dataset.glowColor || '200 80 50'; 
+      const backgroundColor = card.dataset.backgroundColor || '#060010';
+      const borderRadius = card.dataset.borderRadius || 28;
+      const glowRadius = card.dataset.glowRadius || 40;
+      const glowIntensity = card.dataset.glowIntensity || 1;
+      const coneSpread = card.dataset.coneSpread || 25;
+      const animated = card.dataset.animated === 'true';
+      const fillOpacity = card.dataset.fillOpacity || 0.5;
+      const colors = card.dataset.colors 
+        ? JSON.parse(card.dataset.colors) 
+        : ['#c084fc', '#f472b6', '#38bdf8'];
+
+      card.style.setProperty('--card-bg', backgroundColor);
+      card.style.setProperty('--edge-sensitivity', edgeSensitivity);
+      card.style.setProperty('--border-radius', `${borderRadius}px`);
+      card.style.setProperty('--glow-padding', `${glowRadius}px`);
+      card.style.setProperty('--cone-spread', coneSpread);
+      card.style.setProperty('--fill-opacity', fillOpacity);
+      
+      const glowVars = buildGlowVars(glowColor, glowIntensity);
+      for (const [key, val] of Object.entries(glowVars)) {
+        card.style.setProperty(key, val);
+      }
+      const gradVars = buildGradientVars(colors);
+      for (const [key, val] of Object.entries(gradVars)) {
+        card.style.setProperty(key, val);
+      }
+
+      card.addEventListener('pointermove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const edge = getEdgeProximity(card, x, y);
+        const angle = getCursorAngle(card, x, y);
+        card.style.setProperty('--edge-proximity', `${(edge * 100).toFixed(3)}`);
+        card.style.setProperty('--cursor-angle', `${angle.toFixed(3)}deg`);
+      });
+
+      if (animated) {
+        const angleStart = 110;
+        const angleEnd = 465;
+        card.classList.add('sweep-active');
+        card.style.setProperty('--cursor-angle', `${angleStart}deg`);
+
+        animateValue({ duration: 500, onUpdate: v => card.style.setProperty('--edge-proximity', v) });
+        animateValue({ ease: easeInCubic, duration: 1500, end: 50, onUpdate: v => card.style.setProperty('--cursor-angle', `${(angleEnd - angleStart) * (v / 100) + angleStart}deg`) });
+        animateValue({ ease: easeOutCubic, delay: 1500, duration: 2250, start: 50, end: 100, onUpdate: v => card.style.setProperty('--cursor-angle', `${(angleEnd - angleStart) * (v / 100) + angleStart}deg`) });
+        animateValue({ ease: easeInCubic, delay: 2500, duration: 1500, start: 100, end: 0,
+          onUpdate: v => card.style.setProperty('--edge-proximity', v),
+          onEnd: () => card.classList.remove('sweep-active'),
+        });
+      }
+    });
+  }
+
+  // =============================================
   // Init on DOM ready
   // =============================================
   document.addEventListener("DOMContentLoaded", function () {
@@ -646,6 +954,9 @@
     initBounceCards();
     initConstellations();
     initClickSpark();
+    initRoomieFinder();
+    initAddRoomieModal();
+    initBorderGlow();
 
     // Theme toggle click handler
     document.querySelectorAll("#theme-toggle").forEach((toggle) => {
