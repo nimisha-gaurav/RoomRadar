@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RoomRadar | Live Dashboard</title>
+  <meta name="description" content="RoomRadar live hostel counselling dashboard — track your rank, room availability, and predicted slot in real-time." />
+  <link rel="stylesheet" href="css/theme.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script src="js/tailwind-config.js"></script>
+</head>
+<body class="bg-surface text-on-surface min-h-screen">
+
+  <!-- Top Navigation -->
+  <header class="bg-surface-container-lowest/80 backdrop-blur-xl sticky top-0 z-50 flex justify-between items-center px-6 py-3 w-full border-b border-outline-variant/10">
+    <a href="dashboard.html" class="flex items-center gap-3">
+      <span class="material-symbols-outlined text-primary text-2xl">grid_view</span>
+      <span class="text-xl font-bold text-primary font-headline tracking-tight">RoomRadar</span>
+    </a>
+    <div class="flex items-center gap-1">
+      <a href="dashboard.html" data-page="dashboard" class="nav-link"><span class="material-symbols-outlined text-[18px]">home</span><span class="hidden md:inline ml-1">Home</span></a>
+      <a href="rooms.html" data-page="rooms" class="nav-link"><span class="material-symbols-outlined text-[18px]">search</span><span class="hidden md:inline ml-1">Rooms</span></a>
+      <a href="predictor.html" data-page="predictor" class="nav-link"><span class="material-symbols-outlined text-[18px]">query_stats</span><span class="hidden md:inline ml-1">Predictor</span></a>
+      <a href="profile.html" data-page="profile" class="nav-link"><span class="material-symbols-outlined text-[18px]">person</span><span class="hidden md:inline ml-1">Profile</span></a>
+      <div class="h-6 w-px bg-outline-variant/20 mx-2 hidden sm:block"></div>
+      <div class="bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1">
+        <span class="w-2 h-2 bg-secondary rounded-full animate-pulse"></span>
+        LIVE
+      </div>
+      <button id="theme-toggle" class="p-2 rounded-full hover:bg-surface-container-high transition-colors active:scale-95" title="Toggle theme">
+        <span class="material-symbols-outlined text-on-surface-variant theme-icon">dark_mode</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-6 pt-8 space-y-8">
+    <!-- Hero Scoreboard Bento -->
+    <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <!-- Primary Metric: Rank -->
+      <div class="md:col-span-2 bg-surface-container-lowest rounded-xl p-8 flex flex-col justify-between relative overflow-hidden group border border-outline-variant/5">
+        <div class="z-10">
+          <p class="font-headline text-on-surface-variant uppercase tracking-widest text-xs font-bold mb-2">Current Standing</p>
+          <h1 class="text-8xl md:text-9xl font-headline font-extrabold text-primary tracking-tighter flex items-start">
+            124<span class="text-3xl text-primary-container mt-4 ml-2">th</span>
+          </h1>
+        </div>
+        <div class="mt-8 flex items-center gap-4 z-10">
+          <div class="bg-secondary-container/50 px-4 py-2 rounded-full flex items-center gap-2">
+            <span class="material-symbols-outlined text-secondary">trending_up</span>
+            <span class="text-sm font-bold text-secondary-dim">+12 Today</span>
+          </div>
+          <p class="text-on-surface-variant text-sm font-medium">Next call in approx. <span class="text-primary font-bold">14 mins</span></p>
+        </div>
+        <div class="absolute -right-16 -bottom-16 w-64 h-64 bg-primary-container/10 rounded-full blur-3xl group-hover:bg-primary-container/20 transition-colors"></div>
+      </div>
+
+      <!-- Rooms Remaining -->
+      <div class="bg-surface-container-low rounded-xl p-8 flex flex-col items-center justify-center text-center border border-outline-variant/5">
+        <p class="font-headline text-on-surface-variant uppercase tracking-widest text-xs font-bold mb-6">Inventory</p>
+        <div class="relative flex items-center justify-center w-40 h-40">
+          <svg class="w-full h-full transform -rotate-90">
+            <circle class="text-surface-container-highest" cx="80" cy="80" fill="transparent" r="70" stroke="currentColor" stroke-width="12"></circle>
+            <circle class="text-tertiary" cx="80" cy="80" fill="transparent" r="70" stroke="currentColor" stroke-dasharray="440" stroke-dashoffset="110" stroke-width="12"></circle>
+          </svg>
+          <div class="absolute inset-0 flex flex-col items-center justify-center">
+            <span class="text-4xl font-headline font-extrabold text-on-surface">312</span>
+            <span class="text-[10px] text-on-surface-variant uppercase font-bold tracking-tighter">Rooms left</span>
+          </div>
+        </div>
+        <div class="mt-6 bg-tertiary-container text-on-tertiary-container px-4 py-2 rounded-full text-sm font-bold w-full">
+          High Demand Phase
+        </div>
+      </div>
+    </section>
+
+    <!-- Secondary Insights -->
+    <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div class="bg-surface-container-lowest rounded-lg p-6 flex flex-col justify-between border border-outline-variant/5">
+        <div class="flex justify-between items-start mb-4">
+          <span class="material-symbols-outlined text-primary p-2 bg-primary/10 rounded-full">history</span>
+          <span class="text-[10px] text-on-surface-variant font-bold uppercase tracking-widest">2m ago</span>
+        </div>
+        <div>
+          <p class="text-xs text-on-surface-variant font-bold mb-1">Last Allocation</p>
+          <h3 class="text-xl font-bold font-headline text-on-surface">Block B-402</h3>
+          <p class="text-sm text-on-surface-variant mt-1">Premium Triple</p>
+        </div>
+      </div>
+      <div class="bg-surface-container-lowest rounded-lg p-6 flex flex-col justify-between border border-outline-variant/5">
+        <div class="flex justify-between items-start mb-4">
+          <span class="material-symbols-outlined text-secondary p-2 bg-secondary/10 rounded-full">schedule</span>
+          <span class="text-[10px] text-on-surface-variant font-bold uppercase tracking-widest">Live</span>
+        </div>
+        <div>
+          <p class="text-xs text-on-surface-variant font-bold mb-1">Avg. Wait Time</p>
+          <h3 class="text-xl font-bold font-headline text-on-surface">22 mins</h3>
+          <p class="text-sm text-secondary-dim mt-1">Normal Flow</p>
+        </div>
+      </div>
+      <div class="bg-surface-container-lowest rounded-lg p-6 flex flex-col justify-between border border-outline-variant/5">
+        <div class="flex justify-between items-start mb-4">
+          <span class="material-symbols-outlined text-tertiary p-2 bg-tertiary/10 rounded-full">bolt</span>
+          <span class="text-[10px] text-on-surface-variant font-bold uppercase tracking-widest">AI Prediction</span>
+        </div>
+        <div>
+          <p class="text-xs text-on-surface-variant font-bold mb-1">Predicted Slot</p>
+          <h3 class="text-xl font-bold font-headline text-on-surface">Session 4</h3>
+          <p class="text-sm text-on-surface-variant mt-1">Likely 2:30 PM</p>
+        </div>
+      </div>
+      <div class="bg-surface-container-lowest rounded-lg p-6 flex flex-col justify-between border border-outline-variant/5">
+        <div class="flex justify-between items-start mb-4">
+          <span class="material-symbols-outlined text-on-surface-variant p-2 bg-surface-container-high rounded-full">group</span>
+          <span class="text-[10px] text-on-surface-variant font-bold uppercase tracking-widest">Online</span>
+        </div>
+        <div>
+          <p class="text-xs text-on-surface-variant font-bold mb-1">Competing Peers</p>
+          <h3 class="text-xl font-bold font-headline text-on-surface">1,402</h3>
+          <div class="flex -space-x-2 mt-2">
+            <div class="w-6 h-6 rounded-full bg-primary-container border-2 border-surface-container-lowest flex items-center justify-center text-[8px] font-bold text-on-primary-container">A</div>
+            <div class="w-6 h-6 rounded-full bg-secondary-container border-2 border-surface-container-lowest flex items-center justify-center text-[8px] font-bold text-on-secondary-container">S</div>
+            <div class="w-6 h-6 rounded-full bg-surface-container-high border-2 border-surface-container-lowest flex items-center justify-center text-[8px] font-bold text-on-surface-variant">+1k</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Available Inventory -->
+    <section class="space-y-6">
+      <div class="flex justify-between items-end">
+        <div>
+          <h2 class="text-2xl font-headline font-bold text-on-surface">Available Inventory</h2>
+          <p class="text-on-surface-variant text-sm">Real-time room availability across blocks</p>
+        </div>
+        <button class="text-primary font-bold text-sm hover:bg-primary/10 px-4 py-2 rounded-full transition-colors flex items-center gap-2">
+          Refresh List <span class="material-symbols-outlined text-sm">refresh</span>
+        </button>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Room Card 1 -->
+        <a href="room-detail.html" class="bg-surface-container-lowest p-6 rounded-xl flex items-center gap-6 border-l-4 border-l-secondary border border-outline-variant/5 hover:shadow-lg transition-shadow">
+          <div class="w-20 h-20 rounded-lg overflow-hidden shrink-0 bg-surface-container-high flex items-center justify-center">
+            <span class="material-symbols-outlined text-3xl text-on-surface-variant">bed</span>
+          </div>
+          <div class="flex-grow">
+            <div class="flex justify-between items-start">
+              <h4 class="font-headline font-bold text-lg">North Wing • Block A</h4>
+              <span class="bg-secondary-container text-on-secondary-container text-[10px] px-2 py-1 rounded font-bold uppercase">12 Left</span>
+            </div>
+            <p class="text-sm text-on-surface-variant">Single AC • Attached Bath</p>
+            <div class="mt-3 flex items-center gap-4">
+              <span class="text-on-surface-variant text-xs flex items-center gap-1">
+                <span class="material-symbols-outlined text-xs">distance</span> 200m to Library
+              </span>
+            </div>
+          </div>
+        </a>
+        <!-- Room Card 2 -->
+        <a href="room-detail.html" class="bg-surface-container-lowest p-6 rounded-xl flex items-center gap-6 border-l-4 border-l-tertiary border border-outline-variant/5 hover:shadow-lg transition-shadow">
+          <div class="w-20 h-20 rounded-lg overflow-hidden shrink-0 bg-surface-container-high flex items-center justify-center">
+            <span class="material-symbols-outlined text-3xl text-on-surface-variant">king_bed</span>
+          </div>
+          <div class="flex-grow">
+            <div class="flex justify-between items-start">
+              <h4 class="font-headline font-bold text-lg">South Terrace • Block D</h4>
+              <span class="bg-tertiary-container text-on-tertiary-container text-[10px] px-2 py-1 rounded font-bold uppercase">2 Left</span>
+            </div>
+            <p class="text-sm text-on-surface-variant">Double Sharing • Common Bath</p>
+            <div class="mt-3 flex items-center gap-4">
+              <span class="text-on-surface-variant text-xs flex items-center gap-1">
+                <span class="material-symbols-outlined text-xs">distance</span> 50m to Mess
+              </span>
+            </div>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <!-- Predictor Teaser -->
+    <section class="soul-gradient rounded-xl p-8 text-on-primary relative overflow-hidden">
+      <div class="z-10 relative md:w-2/3">
+        <h2 class="text-3xl font-headline font-extrabold mb-4">Probability Predictor</h2>
+        <p class="text-on-primary/80 mb-6 font-medium">Our AI analyzes previous years' trends and current real-time data to estimate which rooms you are most likely to get.</p>
+        <a href="predictor.html" class="inline-flex bg-surface-container-lowest text-primary px-8 py-3 rounded-full font-bold shadow-lg items-center gap-2 hover:scale-105 transition-transform active:scale-95">
+          View My Matches <span class="material-symbols-outlined">query_stats</span>
+        </a>
+      </div>
+      <div class="absolute right-0 top-0 h-full w-1/3 opacity-20 flex items-center justify-center">
+        <span class="material-symbols-outlined text-[12rem]">analytics</span>
+      </div>
+    </section>
+  </main>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

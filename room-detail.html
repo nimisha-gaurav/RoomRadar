@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RoomRadar | Room Details</title>
+  <meta name="description" content="View detailed room reviews, photos, and ratings from verified students on RoomRadar." />
+  <link rel="stylesheet" href="css/theme.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script src="js/tailwind-config.js"></script>
+</head>
+<body class="bg-surface font-body text-on-surface">
+  <!-- Header -->
+  <header class="bg-surface-container-lowest/80 backdrop-blur-xl sticky top-0 z-50 flex justify-between items-center px-6 py-4 w-full border-b border-outline-variant/10">
+    <div class="flex items-center gap-4">
+      <a href="rooms.html" class="text-on-surface-variant hover:bg-surface-container-high transition-colors p-2 rounded-full active:scale-95">
+        <span class="material-symbols-outlined">arrow_back</span>
+      </a>
+      <h1 class="font-headline text-xl font-bold text-primary">RoomRadar</h1>
+    </div>
+    <a href="profile.html" class="text-on-surface-variant hover:bg-surface-container-high transition-colors p-2 rounded-full active:scale-95">
+      <span class="material-symbols-outlined">notifications</span>
+    </a>
+  </header>
+
+  <main class="max-w-2xl mx-auto pb-32">
+    <!-- Photo Gallery -->
+    <section class="relative bg-surface-container-low overflow-hidden">
+      <div class="flex overflow-x-auto no-scrollbar snap-x snap-mandatory gap-4 px-6 py-4">
+        <div class="flex-shrink-0 w-4/5 snap-center">
+          <div class="aspect-[4/5] rounded-xl overflow-hidden bg-surface-container-highest flex items-center justify-center">
+            <span class="material-symbols-outlined text-8xl text-on-surface-variant/30">bed</span>
+          </div>
+        </div>
+        <div class="flex-shrink-0 w-4/5 snap-center">
+          <div class="aspect-[4/5] rounded-xl overflow-hidden bg-surface-container-highest flex items-center justify-center">
+            <span class="material-symbols-outlined text-8xl text-on-surface-variant/30">desk</span>
+          </div>
+        </div>
+        <div class="flex-shrink-0 w-4/5 snap-center">
+          <div class="aspect-[4/5] rounded-xl overflow-hidden bg-surface-container-highest flex items-center justify-center">
+            <span class="material-symbols-outlined text-8xl text-on-surface-variant/30">bathroom</span>
+          </div>
+        </div>
+      </div>
+      <div class="absolute top-8 right-10 flex gap-2">
+        <span class="bg-surface/80 backdrop-blur-xl px-4 py-1.5 rounded-full text-xs font-bold tracking-widest text-on-surface-variant flex items-center gap-1 border border-outline-variant/10">
+          <span class="material-symbols-outlined text-sm">photo_library</span> 1/8
+        </span>
+      </div>
+    </section>
+
+    <!-- Title -->
+    <section class="px-6 pt-8">
+      <div class="flex justify-between items-start mb-2">
+        <h2 class="font-headline text-[2.5rem] font-bold leading-tight tracking-tight text-on-surface">Block A-204</h2>
+        <div class="bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest flex items-center gap-1 h-fit mt-2">
+          <span class="material-symbols-outlined text-xs" style="font-variation-settings: 'FILL' 1;">verified</span>
+          Verified
+        </div>
+      </div>
+      <p class="text-on-surface-variant font-medium flex items-center gap-1.5">
+        <span class="material-symbols-outlined text-primary">location_on</span>
+        North Wing, Ladies' Hostel
+      </p>
+    </section>
+
+    <!-- Ratings -->
+    <section class="px-6 mt-10">
+      <div class="bg-surface-container-low rounded-xl p-8 border border-outline-variant/5">
+        <div class="flex items-end gap-4 mb-8">
+          <span class="font-headline text-5xl font-bold text-primary">4.8</span>
+          <div class="pb-1">
+            <div class="flex text-tertiary">
+              <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+              <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+              <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+              <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+              <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0.5;">star</span>
+            </div>
+            <p class="text-on-surface-variant text-xs font-bold uppercase tracking-widest">Based on 128 Reviews</p>
+          </div>
+        </div>
+        <div class="space-y-6">
+          <div class="space-y-2">
+            <div class="flex justify-between items-center text-sm font-semibold text-on-surface"><span>Cleanliness</span><span class="text-primary">4.9</span></div>
+            <div class="h-2 w-full bg-surface-variant rounded-full overflow-hidden"><div class="h-full soul-gradient rounded-full" style="width: 98%"></div></div>
+          </div>
+          <div class="space-y-2">
+            <div class="flex justify-between items-center text-sm font-semibold text-on-surface"><span>Noise Level</span><span class="text-primary">4.2</span></div>
+            <div class="h-2 w-full bg-surface-variant rounded-full overflow-hidden"><div class="h-full soul-gradient rounded-full" style="width: 84%"></div></div>
+          </div>
+          <div class="space-y-2">
+            <div class="flex justify-between items-center text-sm font-semibold text-on-surface"><span>WiFi Speed</span><span class="text-primary">5.0</span></div>
+            <div class="h-2 w-full bg-surface-variant rounded-full overflow-hidden"><div class="h-full soul-gradient rounded-full" style="width: 100%"></div></div>
+          </div>
+          <div class="space-y-2">
+            <div class="flex justify-between items-center text-sm font-semibold text-on-surface"><span>Ventilation</span><span class="text-primary">4.6</span></div>
+            <div class="h-2 w-full bg-surface-variant rounded-full overflow-hidden"><div class="h-full soul-gradient rounded-full" style="width: 92%"></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Reviews -->
+    <section class="px-6 mt-12 mb-10">
+      <div class="flex justify-between items-center mb-8">
+        <h3 class="font-headline text-2xl font-bold text-on-surface">Student Voice</h3>
+        <button class="text-primary font-bold text-sm hover:underline">See all reviews</button>
+      </div>
+      <div class="space-y-6">
+        <div class="bg-surface-container-lowest p-6 rounded-xl relative border border-outline-variant/5">
+          <div class="absolute -top-3 -right-2">
+            <div class="bg-tertiary-container text-on-tertiary-container px-3 py-1 rounded-lg text-[10px] font-bold uppercase shadow-sm">Anonymous</div>
+          </div>
+          <div class="flex gap-3 items-center mb-4">
+            <div class="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center text-on-surface-variant">
+              <span class="material-symbols-outlined">person</span>
+            </div>
+            <div>
+              <p class="font-bold text-sm">Verified Resident</p>
+              <p class="text-xs text-on-surface-variant">Stayed: Jan 2025 - Present</p>
+            </div>
+          </div>
+          <p class="text-on-surface leading-relaxed text-sm">
+            "The WiFi is genuinely insane here. I work on heavy data models for my degree and haven't had a single drop. Noise is okay, sometimes you hear the elevator but the walls are thick."
+          </p>
+          <div class="mt-4 flex gap-4">
+            <button class="flex items-center gap-1 text-xs font-bold text-on-surface-variant hover:text-primary transition-colors">
+              <span class="material-symbols-outlined text-sm">thumb_up</span> 24
+            </button>
+            <button class="flex items-center gap-1 text-xs font-bold text-on-surface-variant hover:text-primary transition-colors">
+              <span class="material-symbols-outlined text-sm">chat_bubble</span> 2
+            </button>
+          </div>
+        </div>
+        <div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant/5">
+          <div class="flex gap-3 items-center mb-4">
+            <div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-bold">S</div>
+            <div>
+              <p class="font-bold text-sm">Sarah L.</p>
+              <p class="text-xs text-on-surface-variant">Stayed: Sep 2024 - Jun 2025</p>
+            </div>
+          </div>
+          <p class="text-on-surface leading-relaxed text-sm">
+            "Location is the winner here. 5 mins walk from campus. Cleanliness was top notch when I moved in. Highly recommend for 1st year students!"
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Bottom Actions -->
+  <div class="fixed bottom-0 left-0 w-full z-50">
+    <div class="px-6 pb-4">
+      <div class="bg-surface-container-lowest/40 backdrop-blur-2xl rounded-xl p-4 flex gap-3 shadow-[0_-8px_30px_rgba(0,0,0,0.04)] border border-outline-variant/10">
+        <a href="compare.html" class="flex-1 soul-gradient text-on-primary py-4 rounded-full font-bold text-sm tracking-wide flex items-center justify-center gap-2 active:scale-95 duration-150">
+          <span class="material-symbols-outlined text-lg">compare_arrows</span>
+          Compare
+        </a>
+        <button class="w-16 bg-surface-container-high text-on-surface py-4 rounded-full flex items-center justify-center active:scale-95 duration-150 border border-outline-variant/10">
+          <span class="material-symbols-outlined">bookmark</span>
+        </button>
+      </div>
+    </div>
+    <nav class="bg-surface-container-lowest/80 backdrop-blur-xl w-full flex justify-around items-center px-4 pb-6 pt-3 rounded-t-[3rem] shadow-[0_-8px_30px_rgba(0,0,0,0.04)] border-t border-outline-variant/5">
+      <a href="dashboard.html" data-page="dashboard" class="nav-item"><span class="material-symbols-outlined mb-1">home</span><span class="text-[11px] font-semibold tracking-wide uppercase">Home</span></a>
+      <a href="rooms.html" data-page="rooms" class="nav-item"><span class="material-symbols-outlined mb-1">search</span><span class="text-[11px] font-semibold tracking-wide uppercase">Rooms</span></a>
+      <a href="predictor.html" data-page="predictor" class="nav-item"><span class="material-symbols-outlined mb-1">query_stats</span><span class="text-[11px] font-semibold tracking-wide uppercase">Predictor</span></a>
+      <a href="profile.html" data-page="profile" class="nav-item"><span class="material-symbols-outlined mb-1">person</span><span class="text-[11px] font-semibold tracking-wide uppercase">Profile</span></a>
+    </nav>
+  </div>
+  <script src="js/app.js"></script>
+</body>
+</html>

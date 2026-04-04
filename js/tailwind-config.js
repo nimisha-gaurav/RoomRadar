@@ -1,0 +1,78 @@
+// RoomRadar — Shared Tailwind Configuration
+// References CSS custom properties from theme.css
+
+function makeColor(varName) {
+  return `rgb(var(--color-${varName}) / <alpha-value>)`;
+}
+
+tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      colors: {
+        "surface-container-highest": makeColor("surface-container-highest"),
+        "on-tertiary-container": makeColor("on-tertiary-container"),
+        "inverse-on-surface": makeColor("inverse-on-surface"),
+        "surface-container-high": makeColor("surface-container-high"),
+        "outline": makeColor("outline"),
+        "primary-container": makeColor("primary-container"),
+        "tertiary-fixed": makeColor("tertiary-fixed"),
+        "on-primary-container": makeColor("on-primary-container"),
+        "on-primary-fixed-variant": makeColor("on-primary-fixed-variant"),
+        "tertiary": makeColor("tertiary"),
+        "on-tertiary": makeColor("on-tertiary"),
+        "surface-dim": makeColor("surface-dim"),
+        "on-primary": makeColor("on-primary"),
+        "secondary-container": makeColor("secondary-container"),
+        "on-secondary-container": makeColor("on-secondary-container"),
+        "on-secondary-fixed-variant": makeColor("on-secondary-fixed-variant"),
+        "surface-container-lowest": makeColor("surface-container-lowest"),
+        "surface-container": makeColor("surface-container"),
+        "outline-variant": makeColor("outline-variant"),
+        "secondary-fixed": makeColor("secondary-fixed"),
+        "surface": makeColor("surface"),
+        "on-error-container": makeColor("on-error-container"),
+        "on-tertiary-fixed": makeColor("on-tertiary-fixed"),
+        "primary-fixed": makeColor("primary-fixed"),
+        "surface-tint": makeColor("surface-tint"),
+        "error-dim": makeColor("error-dim"),
+        "primary": makeColor("primary"),
+        "on-tertiary-fixed-variant": makeColor("on-tertiary-fixed-variant"),
+        "inverse-primary": makeColor("inverse-primary"),
+        "surface-bright": makeColor("surface-bright"),
+        "error": makeColor("error"),
+        "tertiary-container": makeColor("tertiary-container"),
+        "tertiary-dim": makeColor("tertiary-dim"),
+        "on-background": makeColor("on-background"),
+        "on-secondary": makeColor("on-secondary"),
+        "inverse-surface": makeColor("inverse-surface"),
+        "surface-container-low": makeColor("surface-container-low"),
+        "error-container": makeColor("error-container"),
+        "secondary": makeColor("secondary"),
+        "on-primary-fixed": makeColor("on-primary-fixed"),
+        "secondary-dim": makeColor("secondary-dim"),
+        "surface-variant": makeColor("surface-variant"),
+        "on-secondary-fixed": makeColor("on-secondary-fixed"),
+        "background": makeColor("background"),
+        "on-error": makeColor("on-error"),
+        "tertiary-fixed-dim": makeColor("tertiary-fixed-dim"),
+        "on-surface-variant": makeColor("on-surface-variant"),
+        "primary-fixed-dim": makeColor("primary-fixed-dim"),
+        "on-surface": makeColor("on-surface"),
+        "primary-dim": makeColor("primary-dim"),
+        "secondary-fixed-dim": makeColor("secondary-fixed-dim"),
+      },
+      borderRadius: {
+        DEFAULT: "1rem",
+        lg: "2rem",
+        xl: "3rem",
+        full: "9999px",
+      },
+      fontFamily: {
+        headline: ["Plus Jakarta Sans", "sans-serif"],
+        body: ["Manrope", "sans-serif"],
+        label: ["Manrope", "sans-serif"],
+      },
+    },
+  },
+};

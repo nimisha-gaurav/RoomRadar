@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RoomRadar | Browse Rooms</title>
+  <meta name="description" content="Browse and discover curated hostel rooms with filters, ratings, and student-verified reviews on RoomRadar." />
+  <link rel="stylesheet" href="css/theme.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script src="js/tailwind-config.js"></script>
+</head>
+<body class="bg-surface font-body text-on-surface min-h-screen">
+  <!-- Header -->
+  <header class="bg-surface-container-lowest/80 backdrop-blur-xl sticky top-0 z-50 flex justify-between items-center px-6 py-3 w-full border-b border-outline-variant/10">
+    <a href="dashboard.html" class="flex items-center gap-3">
+      <span class="material-symbols-outlined text-primary text-2xl">grid_view</span>
+      <span class="text-xl font-bold text-primary font-headline tracking-tight">RoomRadar</span>
+    </a>
+    <div class="flex items-center gap-1">
+      <a href="dashboard.html" data-page="dashboard" class="nav-link"><span class="material-symbols-outlined text-[18px]">home</span><span class="hidden md:inline ml-1">Home</span></a>
+      <a href="rooms.html" data-page="rooms" class="nav-link"><span class="material-symbols-outlined text-[18px]">search</span><span class="hidden md:inline ml-1">Rooms</span></a>
+      <a href="predictor.html" data-page="predictor" class="nav-link"><span class="material-symbols-outlined text-[18px]">query_stats</span><span class="hidden md:inline ml-1">Predictor</span></a>
+      <a href="profile.html" data-page="profile" class="nav-link"><span class="material-symbols-outlined text-[18px]">person</span><span class="hidden md:inline ml-1">Profile</span></a>
+      <div class="h-6 w-px bg-outline-variant/20 mx-2 hidden sm:block"></div>
+      <button id="theme-toggle" class="p-2 rounded-full hover:bg-surface-container-high transition-colors active:scale-95" title="Toggle theme">
+        <span class="material-symbols-outlined text-on-surface-variant theme-icon">dark_mode</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-6 pt-8">
+    <!-- Editorial Header -->
+    <section class="mb-12">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+        <div class="max-w-2xl">
+          <h2 class="font-headline text-5xl md:text-6xl font-extrabold tracking-tight text-on-surface mb-4">
+            Curated <span class="text-primary italic">Sanctuaries</span>
+          </h2>
+          <p class="text-on-surface-variant text-lg leading-relaxed">
+            Discover academic housing that prioritizes your peace of mind and productivity. Filtered by experts, chosen by you.
+          </p>
+        </div>
+        <div class="w-full md:w-96 bg-surface-container-low p-2 rounded-lg flex items-center gap-2 border border-outline-variant/10">
+          <span class="material-symbols-outlined ml-3 text-outline">search</span>
+          <input id="room-search" class="bg-transparent border-none focus:ring-0 w-full font-medium placeholder:text-outline-variant text-on-surface" placeholder="Search by Block or Room type..." type="text" />
+        </div>
+      </div>
+    </section>
+
+    <!-- Filter Chips -->
+    <section class="flex flex-wrap items-center gap-4 mb-10 overflow-x-auto pb-2">
+      <div class="flex items-center gap-3 bg-surface-container-low px-4 py-2 rounded-full border border-outline-variant/10">
+        <span class="material-symbols-outlined text-primary text-sm">tune</span>
+        <span class="font-label font-bold text-xs uppercase tracking-wider">Filters</span>
+      </div>
+      <button class="px-6 py-2 rounded-full bg-surface-container-highest text-on-surface font-semibold text-sm hover:bg-surface-variant transition-colors">By Price</button>
+      <button class="px-6 py-2 rounded-full bg-surface-container-highest text-on-surface font-semibold text-sm hover:bg-surface-variant transition-colors">By Rating</button>
+      <div class="h-6 w-[1px] bg-outline-variant/20 mx-2"></div>
+      <button class="px-6 py-2 rounded-full bg-secondary-container text-on-secondary-container font-semibold text-sm">Available Now</button>
+      <button class="px-6 py-2 rounded-full bg-surface-container-low text-on-surface-variant border border-outline-variant/20 font-semibold text-sm">Student-Verified</button>
+    </section>
+
+    <!-- Room Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
+      <!-- Featured Card -->
+      <a href="room-detail.html" class="md:col-span-8 group">
+        <div class="bg-surface-container-lowest rounded-xl overflow-hidden flex flex-col md:flex-row transition-all duration-300 hover:translate-y-[-4px] hover:shadow-xl border border-outline-variant/5">
+          <div class="relative w-full md:w-1/2 aspect-square md:aspect-auto h-80 md:h-full overflow-hidden bg-surface-container-high flex items-center justify-center">
+            <span class="material-symbols-outlined text-[8rem] text-on-surface-variant/20 group-hover:scale-110 transition-transform duration-500">apartment</span>
+            <div class="absolute top-4 left-4 bg-surface/90 backdrop-blur-md px-3 py-1 rounded-full flex items-center gap-1 border border-outline-variant/10">
+              <span class="material-symbols-outlined text-tertiary text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+              <span class="font-bold text-sm">4.9</span>
+            </div>
+          </div>
+          <div class="p-8 flex flex-col justify-between flex-1 bg-secondary-container/10">
+            <div>
+              <div class="flex gap-2 mb-4">
+                <span class="bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest">Premium Choice</span>
+                <span class="bg-primary-container/20 text-on-primary-container px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest">AC</span>
+              </div>
+              <h3 class="font-headline text-3xl font-bold mb-2">Block A-204</h3>
+              <p class="text-on-surface-variant mb-6 leading-relaxed">Premium single AC room with attached bath, corner position for extra quiet study environment.</p>
+            </div>
+            <div class="flex items-center justify-end">
+              <span class="soul-gradient text-on-primary px-8 py-3 rounded-full font-bold text-sm shadow-lg hover:opacity-90 transition-opacity">View Room</span>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <!-- Standard Card 1 -->
+      <a href="room-detail.html" class="md:col-span-4 group">
+        <div class="bg-surface-container-lowest rounded-xl overflow-hidden flex flex-col h-full transition-all duration-300 hover:translate-y-[-4px] border border-outline-variant/5">
+          <div class="relative aspect-[4/3] overflow-hidden bg-surface-container-high flex items-center justify-center">
+            <span class="material-symbols-outlined text-6xl text-on-surface-variant/20 group-hover:scale-110 transition-transform duration-500">king_bed</span>
+            <div class="absolute top-4 left-4 bg-surface/90 backdrop-blur-md px-3 py-1 rounded-full flex items-center gap-1">
+              <span class="material-symbols-outlined text-tertiary text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+              <span class="font-bold text-sm">4.7</span>
+            </div>
+          </div>
+          <div class="p-6 flex flex-col justify-between flex-grow">
+            <div>
+              <div class="flex gap-2 mb-3">
+                <span class="bg-surface-container-high text-on-surface-variant px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest">2-Sharing</span>
+              </div>
+              <h3 class="font-headline text-xl font-bold mb-1">Block B-312</h3>
+              <p class="text-on-surface-variant text-sm mb-4">Double sharing with balcony and great cross-ventilation.</p>
+            </div>
+            <div class="flex items-center justify-end border-t border-outline-variant/10 pt-4">
+              <span class="material-symbols-outlined text-primary hover:bg-primary-container/20 p-2 rounded-full cursor-pointer transition-colors">favorite</span>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <!-- Standard Card 2 -->
+      <a href="room-detail.html" class="md:col-span-4 group">
+        <div class="bg-surface-container-lowest rounded-xl overflow-hidden flex flex-col h-full transition-all duration-300 hover:translate-y-[-4px] border border-outline-variant/5">
+          <div class="relative aspect-[4/3] overflow-hidden bg-surface-container-high flex items-center justify-center">
+            <span class="material-symbols-outlined text-6xl text-on-surface-variant/20 group-hover:scale-110 transition-transform duration-500">single_bed</span>
+            <div class="absolute top-4 left-4 bg-surface/90 backdrop-blur-md px-3 py-1 rounded-full flex items-center gap-1">
+              <span class="material-symbols-outlined text-tertiary text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+              <span class="font-bold text-sm">4.5</span>
+            </div>
+          </div>
+          <div class="p-6 flex flex-col justify-between flex-grow">
+            <div>
+              <div class="flex gap-2 mb-3">
+                <span class="bg-tertiary-container text-on-tertiary-container px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest">Non-AC</span>
+                <span class="bg-surface-container-high text-on-surface-variant px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest">Single</span>
+              </div>
+              <h3 class="font-headline text-xl font-bold mb-1">Block C-105</h3>
+              <p class="text-on-surface-variant text-sm mb-4">Ground floor single with natural ventilation, near common area.</p>
+            </div>
+            <div class="flex items-center justify-end border-t border-outline-variant/10 pt-4">
+              <span class="material-symbols-outlined text-primary hover:bg-primary-container/20 p-2 rounded-full cursor-pointer transition-colors">favorite</span>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <!-- Predictor CTA -->
+      <div class="md:col-span-4">
+        <div class="soul-gradient rounded-xl p-8 text-on-primary h-full flex flex-col justify-center relative overflow-hidden">
+          <span class="material-symbols-outlined text-7xl opacity-20 absolute -right-4 -bottom-4 rotate-12">auto_awesome</span>
+          <h4 class="font-headline text-2xl font-extrabold mb-2">Smart Predictor</h4>
+          <p class="mb-6 opacity-90 leading-relaxed">Our AI analyzes allotment trends to predict which rooms you'll likely get.</p>
+          <a href="predictor.html" class="bg-surface-container-lowest text-primary px-6 py-2 rounded-full font-bold text-sm self-start hover:bg-surface transition-colors">Try Predictor</a>
+        </div>
+      </div>
+
+      <!-- Standard Card 3 -->
+      <a href="room-detail.html" class="md:col-span-4 group">
+        <div class="bg-surface-container-lowest rounded-xl overflow-hidden flex flex-col h-full transition-all duration-300 hover:translate-y-[-4px] border border-outline-variant/5">
+          <div class="relative aspect-[4/3] overflow-hidden bg-surface-container-high flex items-center justify-center">
+            <span class="material-symbols-outlined text-6xl text-on-surface-variant/20 group-hover:scale-110 transition-transform duration-500">meeting_room</span>
+            <div class="absolute top-4 left-4 bg-surface/90 backdrop-blur-md px-3 py-1 rounded-full flex items-center gap-1">
+              <span class="material-symbols-outlined text-tertiary text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+              <span class="font-bold text-sm">4.8</span>
+            </div>
+          </div>
+          <div class="p-6 flex flex-col justify-between flex-grow">
+            <div>
+              <div class="flex gap-2 mb-3">
+                <span class="bg-primary-container/20 text-on-primary-container px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest">AC</span>
+                <span class="bg-surface-container-high text-on-surface-variant px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest">3-Sharing</span>
+              </div>
+              <h3 class="font-headline text-xl font-bold mb-1">Block D-401</h3>
+              <p class="text-on-surface-variant text-sm mb-4">Top floor triple with terrace access and panoramic campus view.</p>
+            </div>
+            <div class="flex items-center justify-end border-t border-outline-variant/10 pt-4">
+              <span class="material-symbols-outlined text-primary hover:bg-primary-container/20 p-2 rounded-full cursor-pointer transition-colors">favorite</span>
+            </div>
+          </div>
+        </div>
+      </a>
+    </div>
+  </main>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
