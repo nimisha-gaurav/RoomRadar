@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RoomRadar | Write a Review</title>
+  <meta name="description" content="Share your hostel room experience with the RoomRadar community." />
+  <link rel="stylesheet" href="css/theme.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script src="js/tailwind-config.js"></script>
+  <style>
+    .star-rating-input input:checked ~ label,
+    .star-rating-input label:hover,
+    .star-rating-input label:hover ~ label {
+      color: var(--primary) !important;
+      font-variation-settings: 'FILL' 1 !important;
+    }
+    .star-rating-input {
+      direction: rtl; /* For CSS sibling selector magic */
+    }
+  </style>
+</head>
+<body class="bg-surface font-body text-on-surface min-h-screen">
+  
+  <header class="bg-surface-container-lowest/80 backdrop-blur-xl sticky top-0 z-50 flex justify-between items-center px-6 py-3 w-full border-b border-outline-variant/10">
+    <a href="dashboard.html" class="flex items-center gap-3">
+      <span class="material-symbols-outlined text-primary text-2xl">grid_view</span>
+      <span class="text-xl font-bold text-primary font-headline tracking-tight">RoomRadar</span>
+    </a>
+    <div class="flex items-center gap-1">
+      <a href="dashboard.html" data-page="dashboard" class="nav-link"><span class="material-symbols-outlined text-[18px]">home</span><span class="hidden md:inline ml-1">Home</span></a>
+      <a href="rooms.html" data-page="rooms" class="nav-link active"><span class="material-symbols-outlined text-[18px]">search</span><span class="hidden md:inline ml-1">Rooms</span></a>
+      <a href="predictor.html" data-page="predictor" class="nav-link"><span class="material-symbols-outlined text-[18px]">query_stats</span><span class="hidden md:inline ml-1">Predictor</span></a>
+      <a href="profile.html" data-page="profile" class="nav-link"><span class="material-symbols-outlined text-[18px]">person</span><span class="hidden md:inline ml-1">Profile</span></a>
+      <div class="h-6 w-px bg-outline-variant/20 mx-2 hidden sm:block"></div>
+      <button id="theme-toggle" class="p-2 rounded-full hover:bg-surface-container-high transition-colors active:scale-95" title="Toggle theme">
+        <span class="material-symbols-outlined text-on-surface-variant theme-icon">dark_mode</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="max-w-3xl mx-auto px-6 py-12">
+    <!-- Header -->
+    <div class="mb-10">
+      <div class="flex items-center gap-3 mb-4">
+        <a href="room-detail.html" class="w-10 h-10 bg-surface-container-high flex items-center justify-center rounded-full hover:bg-surface-container-highest transition-colors active:scale-95">
+          <span class="material-symbols-outlined">arrow_back</span>
+        </a>
+        <div class="font-label text-xs font-bold uppercase tracking-widest text-primary flex items-center gap-1">
+          <span class="material-symbols-outlined text-sm">edit_document</span> Contribute
+        </div>
+      </div>
+      <h1 class="font-headline text-4xl md:text-5xl font-extrabold tracking-tight mb-3">Rate Your Stay</h1>
+      <p class="text-on-surface-variant text-lg">Your honest review helps the RoomRadar community make better housing choices.</p>
+    </div>
+
+    <!-- Review Form -->
+    <div class="bg-surface-container-lowest rounded-2xl p-8 md:p-10 border border-outline-variant/5 shadow-xl shadow-surface-container-highest/20 relative overflow-hidden">
+      <!-- Decoration -->
+      <div class="absolute -right-20 -top-20 w-64 h-64 bg-primary-container/20 rounded-full blur-3xl point-events-none"></div>
+      
+      <form class="space-y-10 relative z-10" id="review-form">
+        <!-- Room Info Target -->
+        <div class="flex gap-4 p-4 rounded-xl bg-surface-container-low border border-outline-variant/10 items-center">
+          <div class="w-14 h-14 bg-surface-container-highest rounded-lg flex items-center justify-center">
+            <span class="material-symbols-outlined text-3xl text-on-surface-variant">apartment</span>
+          </div>
+          <div>
+            <p class="text-xs text-on-surface-variant uppercase font-bold tracking-widest">Reviewing</p>
+            <p class="font-headline font-bold text-xl">Block A-204</p>
+          </div>
+        </div>
+
+        <!-- Overall Rating -->
+        <div class="space-y-4">
+          <label class="block font-headline font-bold text-xl text-on-surface">Overall Rating</label>
+          <div class="flex gap-2">
+            <!-- Custom CSS handled logic for simplistic star click flow (right to left due to standard CSS trick) -->
+            <div class="inline-flex star-rating-input text-4xl text-on-surface-variant/30 gap-1 rounded-full bg-surface-container-high w-fit px-4 py-2">
+              <input type="radio" id="star5" name="overall_rating" value="5" class="hidden" />
+              <label for="star5" class="material-symbols-outlined cursor-pointer hover:scale-110 transition-transform" style="font-variation-settings: 'FILL' 1;">star</label>
+              
+              <input type="radio" id="star4" name="overall_rating" value="4" class="hidden" />
+              <label for="star4" class="material-symbols-outlined cursor-pointer hover:scale-110 transition-transform" style="font-variation-settings: 'FILL' 1;">star</label>
+              
+              <input type="radio" id="star3" name="overall_rating" value="3" class="hidden" />
+              <label for="star3" class="material-symbols-outlined cursor-pointer hover:scale-110 transition-transform" style="font-variation-settings: 'FILL' 1;">star</label>
+              
+              <input type="radio" id="star2" name="overall_rating" value="2" class="hidden" />
+              <label for="star2" class="material-symbols-outlined cursor-pointer hover:scale-110 transition-transform" style="font-variation-settings: 'FILL' 1;">star</label>
+              
+              <input type="radio" id="star1" name="overall_rating" value="1" class="hidden" />
+              <label for="star1" class="material-symbols-outlined cursor-pointer hover:scale-110 transition-transform" style="font-variation-settings: 'FILL' 1;">star</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Metric Ratings Grid -->
+        <div class="bg-surface-container/30 rounded-xl p-6 space-y-6 border border-outline-variant/10">
+          <h3 class="font-bold text-sm uppercase tracking-widest text-on-surface-variant">Specific Metrics</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="space-y-2">
+              <div class="flex justify-between items-center text-sm font-semibold"><span>Cleanliness</span><span class="text-primary font-bold">4.0</span></div>
+              <input type="range" min="1" max="5" step="0.5" value="4" class="w-full accent-primary h-2 bg-surface-container-high rounded-lg appearance-none cursor-pointer" />
+            </div>
+            <div class="space-y-2">
+              <div class="flex justify-between items-center text-sm font-semibold"><span>Noise Level</span><span class="text-primary font-bold">3.5</span></div>
+              <input type="range" min="1" max="5" step="0.5" value="3.5" class="w-full accent-primary h-2 bg-surface-container-high rounded-lg appearance-none cursor-pointer" />
+            </div>
+            <div class="space-y-2">
+              <div class="flex justify-between items-center text-sm font-semibold"><span>WiFi Speed</span><span class="text-primary font-bold">5.0</span></div>
+              <input type="range" min="1" max="5" step="0.5" value="5" class="w-full accent-primary h-2 bg-surface-container-high rounded-lg appearance-none cursor-pointer" />
+            </div>
+            <div class="space-y-2">
+              <div class="flex justify-between items-center text-sm font-semibold"><span>Ventilation</span><span class="text-primary font-bold">4.0</span></div>
+              <input type="range" min="1" max="5" step="0.5" value="4" class="w-full accent-primary h-2 bg-surface-container-high rounded-lg appearance-none cursor-pointer" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Written Review -->
+        <div class="space-y-4">
+          <label class="block font-headline font-bold text-xl text-on-surface" for="review-text">Written Review</label>
+          <textarea id="review-text" rows="5" class="w-full bg-surface-container-low border-none rounded-xl p-5 focus:ring-2 focus:ring-primary/40 focus:bg-surface-container-lowest transition-all placeholder:text-outline-variant text-on-surface resize-y text-base leading-relaxed" placeholder="Tell us what you loved (or hated) about staying in this room. Is the wifi actually good? Does the AC make weird noises? Be brutally honest!"></textarea>
+        </div>
+
+        <!-- Stay Info -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="space-y-2">
+            <label class="text-sm font-semibold text-on-surface-variant ml-2" for="stay-duration">Stay Duration</label>
+            <select id="stay-duration" class="w-full bg-surface-container-low border-none rounded-lg p-4 focus:ring-2 focus:ring-primary/40 text-on-surface">
+              <option disabled selected>Select duration</option>
+              <option>Currently staying here</option>
+              <option>1 Full Year</option>
+              <option>1 Semester</option>
+              <option>Less than a month</option>
+            </select>
+          </div>
+          <div class="space-y-2">
+            <label class="text-sm font-semibold text-on-surface-variant ml-2" for="post-as">Post As</label>
+            <select id="post-as" class="w-full bg-surface-container-low border-none rounded-lg p-4 focus:ring-2 focus:ring-primary/40 text-on-surface">
+              <option>Publicly as Alex Rivers</option>
+              <option>Completely Anonymous</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="pt-6 border-t border-outline-variant/10 flex items-center justify-end gap-4">
+          <a href="room-detail.html" class="px-6 py-3 rounded-full font-bold text-sm text-on-surface-variant hover:bg-surface-container-high transition-colors active:scale-95">Cancel</a>
+          <button type="button" onclick="alert('Review submitted successfully! Thank you for contributing to RoomRadar.')" class="soul-gradient text-on-primary px-8 py-3 rounded-full font-bold flex items-center gap-2 hover:scale-[1.02] shadow-xl shadow-primary/20 transition-transform active:scale-95">
+            Submit Review <span class="material-symbols-outlined text-sm">send</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </main>
+  
+  <script src="js/app.js"></script>
+  <!-- Range slider logic for display -->
+  <script>
+    document.querySelectorAll('input[type="range"]').forEach(slider => {
+      slider.addEventListener('input', (e) => {
+        // Update the sibling score text
+        const amount = Number(e.target.value).toFixed(1);
+        e.target.previousElementSibling.querySelector('.text-primary').textContent = amount;
+      });
+    });
+  </script>
+</body>
+</html>

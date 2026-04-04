@@ -102,10 +102,9 @@
     initPasswordToggle();
 
     // Theme toggle click handler
-    const toggle = document.getElementById("theme-toggle");
-    if (toggle) {
+    document.querySelectorAll("#theme-toggle").forEach((toggle) => {
       toggle.addEventListener("click", toggleTheme);
-    }
+    });
 
     // Re-apply theme UI after DOM is ready
     const theme = document.documentElement.classList.contains("dark")
