@@ -3,16 +3,13 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/fireba
 import { getDatabase } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-database.js";
 import { getAuth } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js";
 
-// These are the exact keys from your screenshot!
-const firebaseConfig = {
-  apiKey: "AIzaSyC1NN64eEFZeu0FD_GyISuvBfxfWJiii6o",
-  authDomain: "roomradar-a7e30.firebaseapp.com",
-  projectId: "roomradar-a7e30",
-  databaseURL: "https://roomradar-a7e30-default-rtdb.firebaseio.com/",
-  storageBucket: "roomradar-a7e30.firebasestorage.app",
-  messagingSenderId: "208625960724",
-  appId: "1:208625960724:web:a485c2ab32fb0bf100a401"
-};
+// These keys are now managed centrally in js/firebase-keys.js
+// Ensure that file is loaded BEFORE this script if not using a bundler
+const firebaseConfig = window.firebaseConfig; 
+
+if (!firebaseConfig) {
+  console.error("Firebase configuration not found! Please ensure js/firebase-keys.js is loaded.");
+}
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);

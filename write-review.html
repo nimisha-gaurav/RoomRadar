@@ -12,14 +12,27 @@
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   <script src="js/tailwind-config.js"></script>
   <style>
-    .star-rating-input input:checked ~ label,
-    .star-rating-input label:hover,
-    .star-rating-input label:hover ~ label {
-      color: var(--primary) !important;
-      font-variation-settings: 'FILL' 1 !important;
-    }
     .star-rating-input {
-      direction: rtl; /* For CSS sibling selector magic */
+      display: flex;
+      gap: 8px;
+    }
+    .star-rating-input input {
+      display: none;
+    }
+    .star-rating-input label {
+      font-size: 2.8rem;
+      color: #373a3c; /* Default greyish */
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+      font-variation-settings: 'FILL' 0, 'wght' 400;
+    }
+    .star-rating-input label.lit {
+      color: #ffca28 !important; /* Gold */
+      font-variation-settings: 'FILL' 1, 'wght' 400;
+    }
+    .star-rating-input label:hover {
+      transform: scale(1.15);
+      color: #ffe082 !important;
     }
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -80,22 +93,21 @@
         <div class="space-y-4">
           <label class="block font-headline font-bold text-xl text-on-surface">Overall Rating</label>
           <div class="flex gap-2">
-            <!-- Custom CSS handled logic for simplistic star click flow (right to left due to standard CSS trick) -->
-            <div class="inline-flex star-rating-input text-4xl text-on-surface-variant/30 gap-1 rounded-full bg-surface-container-high w-fit px-4 py-2">
-              <input type="radio" id="star5" name="overall_rating" value="5" class="hidden" />
-              <label for="star5" class="material-symbols-outlined cursor-pointer hover:scale-110 transition-transform" style="font-variation-settings: 'FILL' 1;">star</label>
+            <div id="overall-star-rating" class="star-rating-input bg-surface-container-high/50 rounded-2xl p-4 border border-outline-variant/10">
+              <input type="radio" id="star1" name="overall_rating" value="1" />
+              <label for="star1" class="material-symbols-outlined">star</label>
               
-              <input type="radio" id="star4" name="overall_rating" value="4" class="hidden" />
-              <label for="star4" class="material-symbols-outlined cursor-pointer hover:scale-110 transition-transform" style="font-variation-settings: 'FILL' 1;">star</label>
+              <input type="radio" id="star2" name="overall_rating" value="2" />
+              <label for="star2" class="material-symbols-outlined">star</label>
               
-              <input type="radio" id="star3" name="overall_rating" value="3" class="hidden" />
-              <label for="star3" class="material-symbols-outlined cursor-pointer hover:scale-110 transition-transform" style="font-variation-settings: 'FILL' 1;">star</label>
+              <input type="radio" id="star3" name="overall_rating" value="3" />
+              <label for="star3" class="material-symbols-outlined">star</label>
               
-              <input type="radio" id="star2" name="overall_rating" value="2" class="hidden" />
-              <label for="star2" class="material-symbols-outlined cursor-pointer hover:scale-110 transition-transform" style="font-variation-settings: 'FILL' 1;">star</label>
+              <input type="radio" id="star4" name="overall_rating" value="4" />
+              <label for="star4" class="material-symbols-outlined">star</label>
               
-              <input type="radio" id="star1" name="overall_rating" value="1" class="hidden" />
-              <label for="star1" class="material-symbols-outlined cursor-pointer hover:scale-110 transition-transform" style="font-variation-settings: 'FILL' 1;">star</label>
+              <input type="radio" id="star5" name="overall_rating" value="5" />
+              <label for="star5" class="material-symbols-outlined">star</label>
             </div>
           </div>
         </div>
@@ -177,63 +189,150 @@
     </div>
   </main>
   
-  <!-- Universal Firebase Scripts (Works on file:// and http://) -->
+  <!-- Firebase SDKs -->
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
 
+  <!-- Configuration -->
+  <script src="js/firebase-keys.js"></script>
   <script>
-    // Your specific Firebase keys
-    const firebaseConfig = {
-      apiKey: "AIzaSyC1NN64eEFZeu0FD_GyISuvBfxfWJiii6o",
-      authDomain: "roomradar-a7e30.firebaseapp.com",
-      projectId: "roomradar-a7e30",
-      databaseURL: "https://roomradar-a7e30-default-rtdb.firebaseio.com/",
-      storageBucket: "roomradar-a7e30.firebasestorage.app",
-      messagingSenderId: "208625960724",
-      appId: "1:208625960724:web:a485c2ab32fb0bf100a401"
-    };
-
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
+    const storage = firebase.storage();
+
+    // Get Room ID from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const ROOM_ID = urlParams.get('id') || "A-204"; 
 
     const form = document.getElementById('review-form');
-    
-    // Function to handle the actual submission
-    const submitReview = async () => {
-      console.log("Submit button clicked! 🚀");
-      
-      // 1. Get all values
-      const overallRating = document.querySelector('input[name="overall_rating"]:checked')?.value || 0;
-      const reviewText = document.getElementById('review-text').value;
-      const stayDuration = document.getElementById('stay-duration').value;
-      const postAs = document.getElementById('post-as').value;
-      
-      const ranges = document.querySelectorAll('input[type="range"]');
-      const metrics = {};
-      ranges.forEach(range => {
-        const labelText = range.previousElementSibling.querySelector('span').textContent.toLowerCase();
-        metrics[labelText] = parseFloat(range.value);
+    const photoInput = document.getElementById('review-photo-upload');
+    const photoPreviewContainer = document.getElementById('review-photo-preview');
+    let selectedFiles = [];
+
+    // Handle Photo Previews
+    photoInput.addEventListener('change', (e) => {
+      const files = Array.from(e.target.files);
+      selectedFiles = [...selectedFiles, ...files];
+      renderPreviews();
+    });
+
+    const renderPreviews = () => {
+      photoPreviewContainer.innerHTML = '';
+      selectedFiles.forEach((file, index) => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const div = document.createElement('div');
+          div.className = 'relative w-24 h-24 flex-shrink-0 group';
+          div.innerHTML = `
+            <img src="${e.target.result}" class="w-full h-full object-cover rounded-lg border border-outline-variant/20 shadow-sm" />
+            <button type="button" onclick="removeFile(${index})" class="absolute -top-2 -right-2 bg-error text-on-error w-6 h-6 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-lg">
+              <span class="material-symbols-outlined text-[14px]">close</span>
+            </button>
+          `;
+          photoPreviewContainer.appendChild(div);
+        };
+        reader.readAsDataURL(file);
+      });
+    };
+
+    window.removeFile = (index) => {
+      selectedFiles.splice(index, 1);
+      renderPreviews();
+    };
+
+    // Star Rating Logic
+    const stars = document.querySelectorAll('#overall-star-rating label');
+    const starInputs = document.querySelectorAll('#overall-star-rating input');
+    let currentLockedRating = 0;
+
+    stars.forEach((star, index) => {
+      // Hover effect
+      star.addEventListener('mouseenter', () => {
+        highlightStars(index + 1);
       });
 
-      const reviewData = {
-        overallRating: parseInt(overallRating),
-        metrics: metrics,
-        reviewText: reviewText,
-        stayDuration: stayDuration,
-        postAs: postAs,
-        createdAt: Date.now() // Standard timestamp
-      };
+      // Mouse leave - return to locked state
+      star.parentElement.addEventListener('mouseleave', () => {
+        highlightStars(currentLockedRating);
+      });
 
+      // Click - lock rating
+      star.addEventListener('click', () => {
+        currentLockedRating = index + 1;
+        highlightStars(currentLockedRating);
+        console.log("Locked rating to:", currentLockedRating);
+      });
+    });
+
+    function highlightStars(rating) {
+      stars.forEach((s, i) => {
+        if (i < rating) {
+          s.classList.add('lit');
+        } else {
+          s.classList.remove('lit');
+        }
+      });
+    }
+
+    // Function to handle the actual submission
+    const submitReview = async () => {
+      const submitBtn = form.querySelector('button[type="button"]');
+      const originalBtnText = submitBtn.innerHTML;
+      
       try {
-        // 2. Save it to reviews/A-204
-        await db.ref('reviews/A-204').push(reviewData);
+        if (currentLockedRating === 0) {
+          alert("Please select a star rating first!");
+          return;
+        }
+
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = `<span class="material-symbols-outlined animate-spin">sync</span> Uploading...`;
         
-        alert("🎉 Review submitted successfully! Your data is now in Firebase.");
-        window.location.href = 'room-detail.html';
+        console.log("Submit button clicked! 🚀");
+        
+        // 1. Upload Photos to Firebase Storage
+        const imageUrls = [];
+        for (const file of selectedFiles) {
+          const storageRef = storage.ref(`review_photos/${Date.now()}_${file.name}`);
+          const snapshot = await storageRef.put(file);
+          const url = await snapshot.ref.getDownloadURL();
+          imageUrls.push(url);
+        }
+
+        // 2. Get all form values
+        const reviewText = document.getElementById('review-text').value;
+        const stayDuration = document.getElementById('stay-duration').value;
+        const postAs = document.getElementById('post-as').value;
+        
+        const ranges = document.querySelectorAll('input[type="range"]');
+        const metrics = {};
+        ranges.forEach(range => {
+          const labelText = range.previousElementSibling.querySelector('span').textContent.toLowerCase();
+          metrics[labelText] = parseFloat(range.value);
+        });
+
+        const reviewData = {
+          overallRating: currentLockedRating,
+          metrics: metrics,
+          reviewText: reviewText,
+          stayDuration: stayDuration,
+          postAs: postAs,
+          images: imageUrls, // Array of URLs
+          createdAt: Date.now()
+        };
+
+        // 3. Save it to reviews
+        await db.ref('reviews/' + ROOM_ID).push(reviewData);
+        
+        alert("🎉 Review submitted successfully! Your photos and rating are live.");
+        window.location.href = `room-detail.html?id=${ROOM_ID}`;
       } catch (e) {
         console.error("Error:", e);
         alert("Oops! Firebase Error: " + e.message);
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalBtnText;
       }
     };
 

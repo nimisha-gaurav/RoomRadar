@@ -282,6 +282,170 @@
     </div>
   </div>
 
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+  <!-- Configuration -->
+  <script src="js/firebase-keys.js"></script>
+  <script>
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    const roomGrid = document.querySelector('.grid-cols-1');
+    const searchInput = document.getElementById('room-search');
+    let allRooms = [];
+
+    // Modal Logic
+    const openModalBtn = document.getElementById('open-add-room-modal');
+    const closeModalBtn = document.getElementById('close-add-room-modal');
+    const modal = document.getElementById('add-room-modal');
+    const backdrop = document.getElementById('add-room-backdrop');
+    const dialog = document.getElementById('add-room-dialog');
+    const addRoomForm = modal.querySelector('form');
+
+    const toggleModal = (show) => {
+      if (show) {
+        modal.classList.remove('hidden');
+        setTimeout(() => {
+          dialog.classList.remove('scale-95', 'opacity-0');
+          dialog.classList.add('scale-100', 'opacity-100');
+        }, 10);
+      } else {
+        dialog.classList.remove('scale-100', 'opacity-100');
+        dialog.classList.add('scale-95', 'opacity-0');
+        setTimeout(() => modal.classList.add('hidden'), 300);
+      }
+    };
+
+    openModalBtn.addEventListener('click', () => toggleModal(true));
+    closeModalBtn.addEventListener('click', () => toggleModal(false));
+    backdrop.addEventListener('click', () => toggleModal(false));
+
+    // Handle Add Room Submission
+    addRoomForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const block = addRoomForm.querySelectorAll('select')[0].value;
+      const roomNumber = addRoomForm.querySelector('input[type="text"]').value;
+      const type = addRoomForm.querySelectorAll('select')[1].value;
+      
+      const newRoom = {
+        block,
+        number: roomNumber,
+        type,
+        rating: 0,
+        totalReviews: 0,
+        id: `${block}-${roomNumber}`,
+        createdAt: Date.now()
+      };
+
+      try {
+        await db.ref(`rooms/${newRoom.id}`).set(newRoom);
+        alert('🎉 Room added successfully! You can now review it.');
+        toggleModal(false);
+        addRoomForm.reset();
+      } catch (err) {
+        alert('Error adding room: ' + err.message);
+      }
+    });
+
+    // Render Room Cards
+    const renderRooms = (rooms) => {
+      // Keep the "Add New Room" CTA
+      const addRoomCTA = `
+        <div class="md:col-span-4">
+          <button id="open-add-room-modal-dynamic" class="w-full h-full border-2 border-dashed border-primary/30 rounded-xl p-8 hover:bg-primary-container/10 transition-colors flex flex-col items-center justify-center text-center group min-h-[300px]">
+            <div class="w-16 h-16 bg-primary-container text-on-primary-container rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-sm">
+              <span class="material-symbols-outlined text-3xl">add_home</span>
+            </div>
+            <h4 class="font-headline text-xl font-bold mb-2">Don't see your room?</h4>
+            <p class="text-sm text-on-surface-variant">Add a new room to the database to share photos and write a review.</p>
+          </button>
+        </div>
+      `;
+
+      if (rooms.length === 0) {
+        roomGrid.innerHTML = `
+          <div class="md:col-span-12 text-center py-20">
+            <p class="text-on-surface-variant text-lg">No rooms found matching your search.</p>
+          </div>
+          ${addRoomCTA}
+        `;
+      } else {
+        roomGrid.innerHTML = rooms.map((room, index) => {
+          const isFeatured = index === 0 && rooms.length > 2;
+          const colSpan = isFeatured ? 'md:col-span-8' : 'md:col-span-4';
+          
+          return `
+            <a href="room-detail.html?id=${room.id}" class="${colSpan} group">
+              <div class="bg-surface-container-lowest rounded-xl overflow-hidden flex flex-col ${isFeatured ? 'md:flex-row' : ''} transition-all duration-300 hover:translate-y-[-4px] hover:shadow-xl border border-outline-variant/5">
+                <div class="relative ${isFeatured ? 'w-full md:w-1/2 aspect-square md:aspect-auto h-80 md:h-full' : 'aspect-[4/3]'} overflow-hidden bg-surface-container-high flex items-center justify-center">
+                  <img src="images/room-${room.type.includes('S') || room.type.includes('1') ? 'single' : 'double'}.png" alt="Room preview" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  <div class="absolute top-4 left-4 bg-surface/90 backdrop-blur-md px-3 py-1 rounded-full flex items-center gap-1">
+                    <span class="material-symbols-outlined text-tertiary text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+                    <span class="font-bold text-sm">${room.rating || '0.0'}</span>
+                  </div>
+                  <div class="absolute bottom-4 right-4 bg-primary/80 backdrop-blur-md text-on-primary px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider">${room.type}</div>
+                </div>
+                <div class="p-6 flex flex-col justify-between flex-grow ${isFeatured ? 'bg-secondary-container/10 p-8 flex-1' : ''}">
+                  <div>
+                    <div class="flex gap-2 mb-3">
+                      <span class="bg-surface-container-high text-on-surface-variant px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest">${room.block} Block</span>
+                    </div>
+                    <h3 class="font-headline ${isFeatured ? 'text-3xl' : 'text-xl'} font-bold mb-1">Room ${room.number}</h3>
+                    <p class="text-on-surface-variant text-sm mb-4 leading-relaxed">${room.block} Block ${room.type} room near the ${parseInt(room.number) < 200 ? 'ground floor' : 'top floor'}.</p>
+                  </div>
+                  <div class="flex items-center justify-end border-t border-outline-variant/10 pt-4">
+                    <span class="text-primary font-bold text-sm group-hover:underline flex items-center gap-1">View Details <span class="material-symbols-outlined text-sm">arrow_forward</span></span>
+                  </div>
+                </div>
+              </div>
+            </a>
+          `;
+        }).join('') + addRoomCTA;
+      }
+
+      // Re-attach modal listener to the new dynamic CTA
+      const dynamicCTA = document.getElementById('open-add-room-modal-dynamic');
+      if (dynamicCTA) dynamicCTA.addEventListener('click', () => toggleModal(true));
+    };
+
+    // Fetch rooms from database
+    const loadRooms = () => {
+      db.ref('rooms').on('value', (snapshot) => {
+        const data = snapshot.val();
+        allRooms = data ? Object.values(data).sort((a, b) => b.createdAt - a.createdAt) : [];
+        
+        // If first run and no rooms, add some defaults
+        if (allRooms.length === 0) {
+          const defaults = [
+            { id: 'A-204', block: 'A', number: '204', type: '4AC', rating: 4.9, createdAt: 1 },
+            { id: 'B-312', block: 'B', number: '312', type: '2AC', rating: 4.7, createdAt: 2 },
+            { id: 'C-105', block: 'C', number: '105', type: '1NAC', rating: 4.5, createdAt: 3 }
+          ];
+          defaults.forEach(r => db.ref(`rooms/${r.id}`).set(r));
+          return;
+        }
+
+        renderFilteredRooms();
+      });
+    };
+
+    const renderFilteredRooms = () => {
+      const term = searchInput.value.toLowerCase();
+      const filtered = allRooms.filter(r => 
+        r.id.toLowerCase().includes(term) || 
+        r.type.toLowerCase().includes(term) ||
+        r.block.toLowerCase().includes(term)
+      );
+      renderRooms(filtered);
+    };
+
+    searchInput.addEventListener('input', renderFilteredRooms);
+
+    loadRooms();
+  </script>
   <script src="js/app.js"></script>
 </body>
 </html>

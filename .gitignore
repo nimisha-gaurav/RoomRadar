@@ -1,0 +1,25 @@
+# RoomRadar Git Ignore Configuration
+
+# Sensitive Firebase Keys (IMPORTANT: Never push this)
+js/firebase-config-keys.js
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# IDE and Editor configs
+.vscode/
+.idea/
+*.swp
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+logs/
+*.log
+
+# Dependencies (if any)
+node_modules/
+dist/
+.tmp/
