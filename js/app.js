@@ -95,11 +95,10 @@
   }
 
   // =============================================
-<<<<<<< Updated upstream
   // Room Type Interactivity
   // =============================================
   function initRoomTypeInteractivity() {
-    const roomTypeSection = Array.from(document.querySelectorAll('p')).find(p => p.textContent.trim() === 'Room Types');
+    const roomTypeSection = Array.from(document.querySelectorAll('p')).find(p => p && p.textContent && p.textContent.trim() === 'Room Types');
     if (!roomTypeSection) return;
     
     const btnsContainer = roomTypeSection.nextElementSibling;
@@ -186,7 +185,11 @@
              }
            }
         });
-=======
+      });
+    });
+  }
+
+  // =============================================
   // Room Photo Upload (rooms.html)
   // =============================================
   function initPhotoUploads() {
@@ -218,14 +221,11 @@
           };
           reader.readAsDataURL(file);
         }
->>>>>>> Stashed changes
       });
     });
   }
 
   // =============================================
-<<<<<<< Updated upstream
-=======
   // Review Form Photo Upload Preview (write-review.html)
   // =============================================
   function initReviewPhotoUpload() {
@@ -289,19 +289,145 @@
   }
 
   // =============================================
->>>>>>> Stashed changes
+  // GSAP BounceCards Gallery (room-detail.html)
+  // =============================================
+  function initBounceCards() {
+    const container = document.getElementById('bounce-cards-container');
+    if (!container || typeof gsap === 'undefined') return;
+
+    const images = [
+      "images/room-single.png", 
+      "images/room-double.png", 
+      "images/room-triple.png"
+    ];
+
+    const transformStyles = [
+      "rotate(-8deg) translate(-100px)",
+      "rotate(0deg)",
+      "rotate(8deg) translate(100px)"
+    ];
+
+    // Render cards
+    images.forEach((src, idx) => {
+      const card = document.createElement('div');
+      card.className = `card card-${idx}`;
+      card.style.transform = transformStyles[idx] || 'none';
+      card.style.zIndex = Math.abs(idx - 1) === 0 ? 10 : 9;
+
+      const img = document.createElement('img');
+      img.className = 'image';
+      img.src = src;
+      img.alt = `Room view ${idx + 1}`;
+
+      card.appendChild(img);
+      container.appendChild(card);
+    });
+
+    const animationDelay = 0.5;
+    const animationStagger = 0.08;
+    const easeType = 'elastic.out(1, 0.8)';
+
+    // Initial animation
+    gsap.fromTo('.card', 
+      { scale: 0 },
+      {
+        scale: 1,
+        stagger: animationStagger,
+        ease: easeType,
+        delay: animationDelay
+      }
+    );
+
+    const getNoRotationTransform = (transformStr) => {
+      const hasRotate = /rotate\([\s\S]*?\)/.test(transformStr);
+      if (hasRotate) {
+        return transformStr.replace(/rotate\([\s\S]*?\)/, 'rotate(0deg)');
+      } else if (transformStr === 'none') {
+        return 'rotate(0deg)';
+      } else {
+        return `${transformStr} rotate(0deg)`;
+      }
+    };
+
+    const getPushedTransform = (baseTransform, offsetX) => {
+      const translateRegex = /translate\(([-0-9.]+)px\)/;
+      const match = baseTransform.match(translateRegex);
+      if (match) {
+        const currentX = parseFloat(match[1]);
+        const newX = currentX + offsetX;
+        return baseTransform.replace(translateRegex, `translate(${newX}px)`);
+      } else {
+        return baseTransform === 'none' ? `translate(${offsetX}px)` : `${baseTransform} translate(${offsetX}px)`;
+      }
+    };
+
+    const pushSiblings = (hoveredIdx) => {
+      images.forEach((_, i) => {
+        const target = container.querySelector(`.card-${i}`);
+        gsap.killTweensOf(target);
+        const baseTransform = transformStyles[i] || 'none';
+
+        if (i === hoveredIdx) {
+          const noRotationTransform = getNoRotationTransform(baseTransform);
+          gsap.to(target, {
+            transform: noRotationTransform,
+            duration: 0.4,
+            ease: 'back.out(1.4)',
+            zIndex: 100, // Bring to front
+            overwrite: 'auto'
+          });
+        } else {
+          const offsetX = i < hoveredIdx ? -140 : 140;
+          const pushedTransform = getPushedTransform(baseTransform, offsetX);
+          const distance = Math.abs(hoveredIdx - i);
+          const delay = distance * 0.05;
+
+          gsap.to(target, {
+            transform: pushedTransform,
+            duration: 0.4,
+            ease: 'back.out(1.4)',
+            delay,
+            zIndex: 10 - distance,
+            overwrite: 'auto'
+          });
+        }
+      });
+    };
+
+    const resetSiblings = () => {
+      images.forEach((_, i) => {
+        const target = container.querySelector(`.card-${i}`);
+        gsap.killTweensOf(target);
+        const baseTransform = transformStyles[i] || 'none';
+        gsap.to(target, {
+          transform: baseTransform,
+          duration: 0.4,
+          ease: 'back.out(1.4)',
+          zIndex: Math.abs(i - 1) === 0 ? 10 : 9,
+          overwrite: 'auto'
+        });
+      });
+    };
+
+    // Attach hover listeners manually
+    images.forEach((_, idx) => {
+      const target = container.querySelector(`.card-${idx}`);
+      target.addEventListener('mouseenter', () => pushSiblings(idx));
+      target.addEventListener('mouseleave', resetSiblings);
+    });
+  }
+
+  // =============================================
   // Init on DOM ready
   // =============================================
   document.addEventListener("DOMContentLoaded", function () {
     setActiveNav();
     initPasswordToggle();
-<<<<<<< Updated upstream
     initRoomTypeInteractivity();
-=======
     initPhotoUploads();
     initReviewPhotoUpload();
     initAddRoomModal();
->>>>>>> Stashed changes
+    initBounceCards();
 
     // Theme toggle click handler
     document.querySelectorAll("#theme-toggle").forEach((toggle) => {

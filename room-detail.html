@@ -9,6 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="js/tailwind-config.js"></script>
 </head>
 <body class="bg-surface font-body text-on-surface">
@@ -31,27 +32,13 @@
 
   <main class="max-w-2xl mx-auto pb-32">
     <!-- Photo Gallery -->
-    <section class="relative bg-surface-container-low overflow-hidden">
-      <div class="flex overflow-x-auto no-scrollbar snap-x snap-mandatory gap-4 px-6 py-4">
-        <div class="flex-shrink-0 w-4/5 snap-center">
-          <div class="aspect-[4/5] rounded-xl overflow-hidden bg-surface-container-highest flex items-center justify-center">
-            <span class="material-symbols-outlined text-8xl text-on-surface-variant/30">bed</span>
-          </div>
-        </div>
-        <div class="flex-shrink-0 w-4/5 snap-center">
-          <div class="aspect-[4/5] rounded-xl overflow-hidden bg-surface-container-highest flex items-center justify-center">
-            <span class="material-symbols-outlined text-8xl text-on-surface-variant/30">desk</span>
-          </div>
-        </div>
-        <div class="flex-shrink-0 w-4/5 snap-center">
-          <div class="aspect-[4/5] rounded-xl overflow-hidden bg-surface-container-highest flex items-center justify-center">
-            <span class="material-symbols-outlined text-8xl text-on-surface-variant/30">bathroom</span>
-          </div>
-        </div>
+    <section class="relative bg-surface-container-low overflow-hidden py-10">
+      <div id="bounce-cards-container" class="bounceCardsContainer">
+        <!-- JS GSAP cards will inject here -->
       </div>
-      <div class="absolute top-8 right-10 flex gap-2">
-        <span class="bg-surface/80 backdrop-blur-xl px-4 py-1.5 rounded-full text-xs font-bold tracking-widest text-on-surface-variant flex items-center gap-1 border border-outline-variant/10">
-          <span class="material-symbols-outlined text-sm">photo_library</span> 1/8
+      <div class="absolute top-6 right-6 lg:right-10 flex gap-2 z-20">
+        <span class="bg-surface/80 backdrop-blur-xl px-4 py-1.5 rounded-full text-xs font-bold tracking-widest text-on-surface-variant flex items-center gap-1 border border-outline-variant/10 shadow-sm pointer-events-none">
+          <span class="material-symbols-outlined text-sm">photo_library</span> <span id="gallery-counter">3 Photos</span>
         </span>
       </div>
     </section>

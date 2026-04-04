@@ -32,4 +32,12 @@ This file has been created as requested. Any changes or updates you ask me to tr
 - The CTA opens a highly-responsive animated modal popup allowing users to enter a new block ID, room sharing capacity, AC/Non-AC type, and attach initial photos.
 - Clicking "Submit" triggers a smooth confirmation and auto-closes the animated menu.
 
-*(The main home page `index.html` was untouched)*
+## Animated Photo Gallery
+- Overhauled the image gallery layout on `room-detail.html` implementing a stunning "Bounce Cards" interactive physics effect.
+- Wrote robust Vanilla JS leveraging the `gsap` animation library (imported via CDN) to map dummy room images into an interactive stacked card deck that intelligently fans out and "pushes" surrounding images apart when hovered.
+
+## Branding & UI Copy
+- ~~Replaced the generic `grid_view` material icon with a custom uploaded logo globally across all 8 HTML page top nav bars.~~ *(Reverted to original `grid_view` icon)*
+- Updated the header text on the rooms page from "Curated Sanctuaries" to "Your Kinda Space".
+
+*(The main home page `index.html` was untouched EXCEPT for its logo header)*
