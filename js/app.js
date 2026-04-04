@@ -95,6 +95,7 @@
   }
 
   // =============================================
+<<<<<<< Updated upstream
   // Room Type Interactivity
   // =============================================
   function initRoomTypeInteractivity() {
@@ -185,17 +186,122 @@
              }
            }
         });
+=======
+  // Room Photo Upload (rooms.html)
+  // =============================================
+  function initPhotoUploads() {
+    document.querySelectorAll('.add-photo-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const input = btn.nextElementSibling;
+        if (input && input.classList.contains('room-photo-upload')) {
+          input.click();
+        }
+      });
+    });
+
+    document.querySelectorAll('.room-photo-upload').forEach(input => {
+      // Prevent clicking the hidden input directly from bubbling up to the card link
+      input.addEventListener('click', (e) => e.stopPropagation());
+      
+      input.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            const container = input.closest('.relative');
+            if (container) {
+               const img = container.querySelector('img.room-image');
+               if (img) img.src = e.target.result;
+            }
+          };
+          reader.readAsDataURL(file);
+        }
+>>>>>>> Stashed changes
       });
     });
   }
 
   // =============================================
+<<<<<<< Updated upstream
+=======
+  // Review Form Photo Upload Preview (write-review.html)
+  // =============================================
+  function initReviewPhotoUpload() {
+    const uploadInput = document.getElementById('review-photo-upload');
+    const previewContainer = document.getElementById('review-photo-preview');
+    if (!uploadInput || !previewContainer) return;
+
+    uploadInput.addEventListener('change', (e) => {
+      previewContainer.innerHTML = ''; // Clear previous previews
+      const files = Array.from(e.target.files);
+      
+      files.forEach(file => {
+        if (!file.type.startsWith('image/')) return;
+        
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const imgWrapper = document.createElement('div');
+          imgWrapper.className = 'w-24 h-24 flex-shrink-0 rounded-lg overflow-hidden border border-outline-variant/20 relative group shadow-sm bg-surface-container-high';
+          
+          const img = document.createElement('img');
+          img.src = e.target.result;
+          img.className = 'w-full h-full object-cover';
+          
+          imgWrapper.appendChild(img);
+          previewContainer.appendChild(imgWrapper);
+        };
+        reader.readAsDataURL(file);
+      });
+    });
+  }
+
+  // =============================================
+  // Add Room Modal Logic (rooms.html)
+  // =============================================
+  function initAddRoomModal() {
+    const openBtn = document.getElementById('open-add-room-modal');
+    const closeBtn = document.getElementById('close-add-room-modal');
+    const backdrop = document.getElementById('add-room-backdrop');
+    const modal = document.getElementById('add-room-modal');
+    const dialog = document.getElementById('add-room-dialog');
+
+    if (!modal || !openBtn) return;
+
+    const openModal = () => {
+      modal.classList.remove('hidden');
+      // trigger reflow
+      void modal.offsetWidth;
+      dialog.classList.remove('scale-95', 'opacity-0');
+      dialog.classList.add('scale-100', 'opacity-100');
+    };
+
+    const closeModal = () => {
+      dialog.classList.remove('scale-100', 'opacity-100');
+      dialog.classList.add('scale-95', 'opacity-0');
+      setTimeout(() => modal.classList.add('hidden'), 300);
+    };
+
+    openBtn.addEventListener('click', openModal);
+    closeBtn.addEventListener('click', closeModal);
+    backdrop.addEventListener('click', closeModal);
+  }
+
+  // =============================================
+>>>>>>> Stashed changes
   // Init on DOM ready
   // =============================================
   document.addEventListener("DOMContentLoaded", function () {
     setActiveNav();
     initPasswordToggle();
+<<<<<<< Updated upstream
     initRoomTypeInteractivity();
+=======
+    initPhotoUploads();
+    initReviewPhotoUpload();
+    initAddRoomModal();
+>>>>>>> Stashed changes
 
     // Theme toggle click handler
     document.querySelectorAll("#theme-toggle").forEach((toggle) => {

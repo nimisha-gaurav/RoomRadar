@@ -120,6 +120,22 @@
           </div>
         </div>
 
+        <!-- Photo Upload -->
+        <div class="space-y-4">
+          <label class="block font-headline font-bold text-xl text-on-surface">Upload Photos <span class="text-on-surface-variant font-normal text-sm ml-2">(Optional)</span></label>
+          <div class="border-2 border-dashed border-outline-variant/30 rounded-xl p-8 flex flex-col items-center justify-center text-center hover:bg-surface-container-low transition-colors cursor-pointer group" onclick="document.getElementById('review-photo-upload').click()">
+            <div class="w-16 h-16 bg-surface-container-high rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+              <span class="material-symbols-outlined text-3xl text-on-surface-variant">add_photo_alternate</span>
+            </div>
+            <p class="font-bold text-on-surface mb-1">Click to browse or drag photos here</p>
+            <p class="text-xs text-on-surface-variant">Supports JPG, PNG (Max 5MB)</p>
+            <input type="file" id="review-photo-upload" accept="image/*" multiple class="hidden" />
+          </div>
+          <div id="review-photo-preview" class="flex gap-4 overflow-x-auto py-2">
+            <!-- Preview images will be injected here by JS -->
+          </div>
+        </div>
+
         <!-- Written Review -->
         <div class="space-y-4">
           <label class="block font-headline font-bold text-xl text-on-surface" for="review-text">Written Review</label>
