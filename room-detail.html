@@ -63,34 +63,34 @@
     <section class="px-6 mt-10">
       <div class="bg-surface-container-low rounded-xl p-8 border border-outline-variant/5">
         <div class="flex items-end gap-4 mb-8">
-          <span class="font-headline text-5xl font-bold text-primary">4.8</span>
+          <span class="font-headline text-5xl font-bold text-primary" id="avg-rating-text">0.0</span>
           <div class="pb-1">
-            <div class="flex text-tertiary">
-              <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
-              <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
-              <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
-              <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
-              <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0.5;">star</span>
+            <div class="flex text-tertiary" id="star-container">
+              <span class="material-symbols-outlined">star</span>
+              <span class="material-symbols-outlined">star</span>
+              <span class="material-symbols-outlined">star</span>
+              <span class="material-symbols-outlined">star</span>
+              <span class="material-symbols-outlined">star</span>
             </div>
-            <p class="text-on-surface-variant text-xs font-bold uppercase tracking-widest">Based on 128 Reviews</p>
+            <p class="text-on-surface-variant text-xs font-bold uppercase tracking-widest"><span id="total-reviews-val">0</span> Reviews</p>
           </div>
         </div>
         <div class="space-y-6">
           <div class="space-y-2">
-            <div class="flex justify-between items-center text-sm font-semibold text-on-surface"><span>Cleanliness</span><span class="text-primary">4.9</span></div>
-            <div class="h-2 w-full bg-surface-variant rounded-full overflow-hidden"><div class="h-full soul-gradient rounded-full" style="width: 98%"></div></div>
+            <div class="flex justify-between items-center text-sm font-semibold text-on-surface"><span>Cleanliness</span><span class="text-primary" id="cleanliness-val">0.0</span></div>
+            <div class="h-2 w-full bg-surface-variant rounded-full overflow-hidden"><div class="h-full soul-gradient rounded-full transition-all duration-700" id="cleanliness-bar" style="width: 0%"></div></div>
           </div>
           <div class="space-y-2">
-            <div class="flex justify-between items-center text-sm font-semibold text-on-surface"><span>Noise Level</span><span class="text-primary">4.2</span></div>
-            <div class="h-2 w-full bg-surface-variant rounded-full overflow-hidden"><div class="h-full soul-gradient rounded-full" style="width: 84%"></div></div>
+            <div class="flex justify-between items-center text-sm font-semibold text-on-surface"><span>Noise Level</span><span class="text-primary" id="noise-val">0.0</span></div>
+            <div class="h-2 w-full bg-surface-variant rounded-full overflow-hidden"><div class="h-full soul-gradient rounded-full transition-all duration-700" id="noise-bar" style="width: 0%"></div></div>
           </div>
           <div class="space-y-2">
-            <div class="flex justify-between items-center text-sm font-semibold text-on-surface"><span>WiFi Speed</span><span class="text-primary">5.0</span></div>
-            <div class="h-2 w-full bg-surface-variant rounded-full overflow-hidden"><div class="h-full soul-gradient rounded-full" style="width: 100%"></div></div>
+            <div class="flex justify-between items-center text-sm font-semibold text-on-surface"><span>WiFi Speed</span><span class="text-primary" id="wifi-val">0.0</span></div>
+            <div class="h-2 w-full bg-surface-variant rounded-full overflow-hidden"><div class="h-full soul-gradient rounded-full transition-all duration-700" id="wifi-bar" style="width: 0%"></div></div>
           </div>
           <div class="space-y-2">
-            <div class="flex justify-between items-center text-sm font-semibold text-on-surface"><span>Ventilation</span><span class="text-primary">4.6</span></div>
-            <div class="h-2 w-full bg-surface-variant rounded-full overflow-hidden"><div class="h-full soul-gradient rounded-full" style="width: 92%"></div></div>
+            <div class="flex justify-between items-center text-sm font-semibold text-on-surface"><span>Ventilation</span><span class="text-primary" id="ventilation-val">0.0</span></div>
+            <div class="h-2 w-full bg-surface-variant rounded-full overflow-hidden"><div class="h-full soul-gradient rounded-full transition-all duration-700" id="ventilation-bar" style="width: 0%"></div></div>
           </div>
         </div>
       </div>
@@ -107,43 +107,11 @@
           <button class="text-on-surface-variant font-bold text-sm hover:underline">See all</button>
         </div>
       </div>
-      <div class="space-y-6">
-        <div class="bg-surface-container-lowest p-6 rounded-xl relative border border-outline-variant/5">
-          <div class="absolute -top-3 -right-2">
-            <div class="bg-tertiary-container text-on-tertiary-container px-3 py-1 rounded-lg text-[10px] font-bold uppercase shadow-sm">Anonymous</div>
-          </div>
-          <div class="flex gap-3 items-center mb-4">
-            <div class="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center text-on-surface-variant">
-              <span class="material-symbols-outlined">person</span>
-            </div>
-            <div>
-              <p class="font-bold text-sm">Verified Resident</p>
-              <p class="text-xs text-on-surface-variant">Stayed: Jan 2025 - Present</p>
-            </div>
-          </div>
-          <p class="text-on-surface leading-relaxed text-sm">
-            "The WiFi is genuinely insane here. I work on heavy data models for my degree and haven't had a single drop. Noise is okay, sometimes you hear the elevator but the walls are thick."
-          </p>
-          <div class="mt-4 flex gap-4">
-            <button class="flex items-center gap-1 text-xs font-bold text-on-surface-variant hover:text-primary transition-colors">
-              <span class="material-symbols-outlined text-sm">thumb_up</span> 24
-            </button>
-            <button class="flex items-center gap-1 text-xs font-bold text-on-surface-variant hover:text-primary transition-colors">
-              <span class="material-symbols-outlined text-sm">chat_bubble</span> 2
-            </button>
-          </div>
-        </div>
-        <div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant/5">
-          <div class="flex gap-3 items-center mb-4">
-            <div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-bold">S</div>
-            <div>
-              <p class="font-bold text-sm">Sarah L.</p>
-              <p class="text-xs text-on-surface-variant">Stayed: Sep 2024 - Jun 2025</p>
-            </div>
-          </div>
-          <p class="text-on-surface leading-relaxed text-sm">
-            "Location is the winner here. 5 mins walk from campus. Cleanliness was top notch when I moved in. Highly recommend for 1st year students!"
-          </p>
+      <div class="space-y-6" id="reviews-container">
+        <!-- Dynamic reviews will be loaded here -->
+        <div class="animate-pulse flex flex-col gap-4">
+          <div class="h-32 bg-surface-container-high rounded-xl"></div>
+          <div class="h-32 bg-surface-container-high rounded-xl"></div>
         </div>
       </div>
     </section>
@@ -164,6 +132,140 @@
     </div>
 
   </div>
+  <!-- Universal Firebase Scripts (Works on file:// and http://) -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+  <script>
+    // Your specific Firebase keys
+    const firebaseConfig = {
+      apiKey: "AIzaSyC1NN64eEFZeu0FD_GyISuvBfxfWJiii6o",
+      authDomain: "roomradar-a7e30.firebaseapp.com",
+      projectId: "roomradar-a7e30",
+      databaseURL: "https://roomradar-a7e30-default-rtdb.firebaseio.com/",
+      storageBucket: "roomradar-a7e30.firebasestorage.app",
+      messagingSenderId: "208625960724",
+      appId: "1:208625960724:web:a485c2ab32fb0bf100a401"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    const ROOM_ID = "A-204"; 
+    const reviewsContainer = document.getElementById('reviews-container');
+
+    const updateRatings = (reviews) => {
+      const count = reviews.length;
+      if (count === 0) {
+        document.getElementById('avg-rating-text').textContent = "0.0";
+        document.getElementById('total-reviews-val').textContent = "0";
+        return;
+      }
+
+      let totals = { overall: 0, cleanliness: 0, noise: 0, wifi: 0, ventilation: 0 };
+      
+      reviews.forEach(r => {
+        totals.overall += r.overallRating || 0;
+        totals.cleanliness += r.metrics?.cleanliness || 0;
+        totals.noise += r.metrics?.["noise level"] || 0;
+        totals.wifi += r.metrics?.["wifi speed"] || 0;
+        totals.ventilation += r.metrics?.ventilation || 0;
+      });
+
+      const avgs = {
+        overall: (totals.overall / count).toFixed(1),
+        cleanliness: (totals.cleanliness / count).toFixed(1),
+        noise: (totals.noise / count).toFixed(1),
+        wifi: (totals.wifi / count).toFixed(1),
+        ventilation: (totals.ventilation / count).toFixed(1)
+      };
+
+      // Update UI Text
+      document.getElementById('avg-rating-text').textContent = avgs.overall;
+      document.getElementById('total-reviews-val').textContent = count;
+      document.getElementById('cleanliness-val').textContent = avgs.cleanliness;
+      document.getElementById('noise-val').textContent = avgs.noise;
+      document.getElementById('wifi-val').textContent = avgs.wifi;
+      document.getElementById('ventilation-val').textContent = avgs.ventilation;
+
+      // Update Progress Bars
+      document.getElementById('cleanliness-bar').style.width = `${(avgs.cleanliness / 5) * 100}%`;
+      document.getElementById('noise-bar').style.width = `${(avgs.noise / 5) * 100}%`;
+      document.getElementById('wifi-bar').style.width = `${(avgs.wifi / 5) * 100}%`;
+      document.getElementById('ventilation-bar').style.width = `${(avgs.ventilation / 5) * 100}%`;
+
+      // Update Stars
+      const stars = document.getElementById('star-container').querySelectorAll('span');
+      stars.forEach((star, index) => {
+        const fill = Math.min(Math.max(avgs.overall - index, 0), 1);
+        star.style.fontVariationSettings = `'FILL' ${fill}`;
+      });
+    };
+
+    const renderReviews = (reviews) => {
+      if (reviews.length === 0) {
+        reviewsContainer.innerHTML = `
+          <div class="bg-surface-container-low p-8 rounded-xl text-center border border-dashed border-outline-variant">
+            <span class="material-symbols-outlined text-4xl text-on-surface-variant mb-2">rate_review</span>
+            <p class="font-bold text-on-surface">No reviews yet</p>
+            <p class="text-sm text-on-surface-variant">Be the first to share your experience!</p>
+          </div>
+        `;
+        return;
+      }
+
+      // Sort newest first
+      const sortedReviews = [...reviews].sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+
+      reviewsContainer.innerHTML = sortedReviews.map(r => {
+        const isAnonymous = r.postAs && r.postAs.includes("Anonymous");
+        return `
+          <div class="bg-surface-container-lowest p-6 rounded-xl relative border border-outline-variant/10 shadow-sm transition-all hover:border-primary/20">
+            ${isAnonymous ? `
+              <div class="absolute -top-3 -right-2">
+                <div class="bg-tertiary-container text-on-tertiary-container px-3 py-1 rounded-lg text-[10px] font-bold uppercase shadow-sm">Anonymous</div>
+              </div>
+            ` : ''}
+            <div class="flex gap-3 items-center mb-4">
+              <div class="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center text-on-surface-variant">
+                <span class="material-symbols-outlined">${isAnonymous ? 'person' : 'account_circle'}</span>
+              </div>
+              <div>
+                <p class="font-bold text-sm">${isAnonymous ? 'Verified Resident' : r.postAs.replace('Publicly as ', '')}</p>
+                <p class="text-xs text-on-surface-variant">${r.stayDuration || 'Recent Stay'}</p>
+              </div>
+              <div class="ml-auto bg-primary/5 text-primary px-2 py-0.5 rounded flex items-center gap-1 text-[10px] font-bold">
+                <span class="material-symbols-outlined text-[10px]" style="font-variation-settings: 'FILL' 1;">star</span>
+                ${r.overallRating}.0
+              </div>
+            </div>
+            <p class="text-on-surface leading-relaxed text-sm">
+              "${r.reviewText}"
+            </p>
+          </div>
+        `;
+      }).join('');
+    };
+
+    const loadData = () => {
+      const dbRef = db.ref('reviews/' + ROOM_ID);
+      dbRef.on('value', (snapshot) => {
+        const data = snapshot.val();
+        const reviews = data ? Object.values(data) : [];
+        updateRatings(reviews);
+        renderReviews(reviews);
+      }, (error) => {
+        console.error("Error:", error);
+        reviewsContainer.innerHTML = `<p class="text-error text-sm p-4">Error loading reviews. Check console.</p>`;
+      });
+    };
+
+    loadData();
+  </script>
+  <script src="js/app.js"></script>
+</body>
+</html>
   <script src="js/app.js"></script>
 </body>
 </html>
