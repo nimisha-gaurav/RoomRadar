@@ -95,11 +95,107 @@
   }
 
   // =============================================
+  // Room Type Interactivity
+  // =============================================
+  function initRoomTypeInteractivity() {
+    const roomTypeSection = Array.from(document.querySelectorAll('p')).find(p => p.textContent.trim() === 'Room Types');
+    if (!roomTypeSection) return;
+    
+    const btnsContainer = roomTypeSection.nextElementSibling;
+    if (!btnsContainer) return;
+
+    const buttons = btnsContainer.querySelectorAll('button');
+    const blockContainers = document.querySelectorAll('.grid.place-items-center > div.flex-col');
+
+    const roomData = {
+      "6NAC": { "A": 12, "E-annex": 12 },
+      "6AC":  { "F": 78 },
+      "4NAC": { "A": 80 },
+      "4AC":  { "C": 208, "D": 56, "E": 56, "F": 76 },
+      "3NAC": { "H": 6, "J": 105 },
+      "3AC":  {},
+      "2NAC": { "A": 8, "E-annex": 6 },
+      "2AC":  { "C": 8, "D": 4, "E": 160, "E-annex": 20 },
+      "1NAC": { "B": 11 },
+      "1AC":  { "D": 31, "E-annex": 15, "F": 3 },
+      "6 NAPT": { "H": 90, "J": 54 },
+      "5 NAPT": { "J": 15 },
+      "4 NAPT": { "H": 84, "J": 98 },
+      "3 NAPT": {},
+      "2 NAPT": {},
+      "4 Apt":  { "H": 128 },
+      "3 Apt":  {},
+      "2 Apt":  { "J": 40 }
+    };
+
+    blockContainers.forEach(block => {
+      const relativeDiv = block.querySelector('.relative');
+      if (relativeDiv && !relativeDiv.querySelector('.qty-span')) {
+        const span = document.createElement('span');
+        span.className = "absolute inset-0 flex items-center justify-center text-sm font-bold qty-span text-on-surface";
+        span.textContent = "-";
+        relativeDiv.appendChild(span);
+        const progressCircle = relativeDiv.querySelector('circle:nth-child(2)');
+        if (progressCircle) {
+           progressCircle.setAttribute('stroke-dasharray', '176');
+           progressCircle.setAttribute('stroke-dashoffset', '176');
+           progressCircle.style.transition = 'stroke-dashoffset 0.5s ease-out';
+        }
+      }
+    });
+
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const isActive = btn.classList.contains('bg-primary');
+        if (isActive) {
+          btn.classList.remove('bg-primary', 'text-on-primary');
+          btn.classList.add('bg-surface-container-high', 'text-on-surface');
+        } else {
+          btn.classList.add('bg-primary', 'text-on-primary');
+          btn.classList.remove('bg-surface-container-high', 'text-on-surface');
+        }
+
+        const activeTypes = Array.from(buttons)
+          .filter(b => b.classList.contains('bg-primary'))
+          .map(b => b.textContent.trim());
+
+        blockContainers.forEach(block => {
+           let blockName = block.getAttribute('title').replace('Block ', '').trim();
+           
+           let qty = 0;
+           activeTypes.forEach(type => {
+               const data = roomData[type] || {};
+               qty += (data[blockName] || 0);
+           });
+
+           const span = block.querySelector('.qty-span');
+           const progressCircle = block.querySelector('circle:nth-child(2)');
+
+           if (span) {
+             span.textContent = qty > 0 ? qty : "-";
+             span.classList.toggle('text-tertiary', qty > 0);
+           }
+           
+           if (progressCircle) {
+             if (qty > 0) {
+               const offset = 176 - Math.min((qty / 200) * 176, 176); 
+               progressCircle.setAttribute('stroke-dashoffset', offset);
+             } else {
+               progressCircle.setAttribute('stroke-dashoffset', '176');
+             }
+           }
+        });
+      });
+    });
+  }
+
+  // =============================================
   // Init on DOM ready
   // =============================================
   document.addEventListener("DOMContentLoaded", function () {
     setActiveNav();
     initPasswordToggle();
+    initRoomTypeInteractivity();
 
     // Theme toggle click handler
     document.querySelectorAll("#theme-toggle").forEach((toggle) => {

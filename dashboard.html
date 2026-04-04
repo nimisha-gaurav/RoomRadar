@@ -37,13 +37,13 @@
 
   <main class="max-w-5xl mx-auto px-6 pt-8 space-y-8">
     <!-- Hero Scoreboard Bento -->
-    <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6">
       <!-- Primary Metric: Rank -->
-      <div class="md:col-span-2 bg-surface-container-lowest rounded-xl p-8 flex flex-col justify-between relative overflow-hidden group border border-outline-variant/5">
+      <div class="bg-surface-container-lowest rounded-xl p-8 flex flex-col justify-between relative overflow-hidden group border border-outline-variant/5">
         <div class="z-10">
           <p class="font-headline text-on-surface-variant uppercase tracking-widest text-xs font-bold mb-2">Current Standing</p>
-          <h1 class="text-8xl md:text-9xl font-headline font-extrabold text-primary tracking-tighter flex items-start">
-            124<span class="text-3xl text-primary-container mt-4 ml-2">th</span>
+          <h1 class="text-8xl md:text-9xl font-headline font-extrabold text-primary tracking-tighter">
+            124<span class="align-super text-3xl md:text-4xl text-primary-container">th</span>
           </h1>
         </div>
         <div class="mt-8 flex items-center gap-4 z-10">
@@ -57,20 +57,25 @@
       </div>
 
       <!-- Rooms Remaining -->
-      <div class="bg-surface-container-low rounded-xl p-8 flex flex-col items-center justify-center text-center border border-outline-variant/5">
-        <p class="font-headline text-on-surface-variant uppercase tracking-widest text-xs font-bold mb-6">Inventory</p>
-        <div class="relative flex items-center justify-center w-40 h-40">
-          <svg class="w-full h-full transform -rotate-90">
-            <circle class="text-surface-container-highest" cx="80" cy="80" fill="transparent" r="70" stroke="currentColor" stroke-width="12"></circle>
-            <circle class="text-tertiary" cx="80" cy="80" fill="transparent" r="70" stroke="currentColor" stroke-dasharray="440" stroke-dashoffset="110" stroke-width="12"></circle>
-          </svg>
-          <div class="absolute inset-0 flex flex-col items-center justify-center">
-            <span class="text-4xl font-headline font-extrabold text-on-surface">312</span>
-            <span class="text-[10px] text-on-surface-variant uppercase font-bold tracking-tighter">Rooms left</span>
-          </div>
-        </div>
-        <div class="mt-6 bg-tertiary-container text-on-tertiary-container px-4 py-2 rounded-full text-sm font-bold w-full">
-          High Demand Phase
+      <div class="bg-surface-container-low rounded-xl p-6 flex flex-col justify-between text-center border border-outline-variant/5 relative shrink-0">
+        <p class="font-headline text-on-surface-variant uppercase tracking-widest text-xs font-bold mb-4 w-full flex justify-between items-center">
+          <span>Block Inventory</span>
+          <span class="bg-tertiary-container text-on-tertiary-container px-2 py-0.5 rounded text-[9px]">LIVE</span>
+        </p>
+        <div class="grid grid-cols-4 gap-y-6 gap-x-4 w-full place-items-center">
+          <div class="flex flex-col items-center" title="Block A"><div class="relative w-16 h-16 mb-2"><svg class="w-full h-full transform -rotate-90"><circle class="text-surface-container-highest" cx="32" cy="32" fill="transparent" r="28" stroke="currentColor" stroke-width="4"></circle><circle class="text-tertiary" cx="32" cy="32" fill="transparent" r="28" stroke="currentColor" stroke-dasharray="176" stroke-dashoffset="176" stroke-width="4"></circle></svg></div><span class="text-xs font-bold text-on-surface-variant">A</span></div>
+          <div class="flex flex-col items-center" title="Block B"><div class="relative w-16 h-16 mb-2"><svg class="w-full h-full transform -rotate-90"><circle class="text-surface-container-highest" cx="32" cy="32" fill="transparent" r="28" stroke="currentColor" stroke-width="4"></circle><circle class="text-tertiary" cx="32" cy="32" fill="transparent" r="28" stroke="currentColor" stroke-dasharray="176" stroke-dashoffset="176" stroke-width="4"></circle></svg></div><span class="text-xs font-bold text-on-surface-variant">B</span></div>
+          <div class="flex flex-col items-center" title="Block C"><div class="relative w-16 h-16 mb-2"><svg class="w-full h-full transform -rotate-90"><circle class="text-surface-container-highest" cx="32" cy="32" fill="transparent" r="28" stroke="currentColor" stroke-width="4"></circle><circle class="text-tertiary" cx="32" cy="32" fill="transparent" r="28" stroke="currentColor" stroke-dasharray="176" stroke-dashoffset="176" stroke-width="4"></circle></svg></div><span class="text-xs font-bold text-on-surface-variant">C</span></div>
+          <div class="flex flex-col items-center" title="Block D"><div class="relative w-16 h-16 mb-2"><svg class="w-full h-full transform -rotate-90"><circle class="text-surface-container-highest" cx="32" cy="32" fill="transparent" r="28" stroke="currentColor" stroke-width="4"></circle><circle class="text-tertiary" cx="32" cy="32" fill="transparent" r="28" stroke="currentColor" stroke-dasharray="176" stroke-dashoffset="176" stroke-width="4"></circle></svg></div><span class="text-xs font-bold text-on-surface-variant">D</span></div>
+          <div class="flex flex-col items-center" title="Block E"><div class="relative w-16 h-16 mb-2"><svg class="w-full h-full transform -rotate-90"><circle class="text-surface-container-highest" cx="32" cy="32" fill="transparent" r="28" stroke="currentColor" stroke-width="4"></circle><circle class="text-tertiary" cx="32" cy="32" fill="transparent" r="28" stroke="currentColor" stroke-dasharray="176" stroke-dashoffset="176" stroke-width="4"></circle></svg></div><span class="text-xs font-bold text-on-surface-variant">E</span></div>
+          <div class="flex flex-col items-center" title="E-annex"><div class="relative w-16 h-16 mb-2"><svg class="w-full h-full transform -rotate-90"><circle class="text-surface-container-highest" cx="32" cy="32" fill="transparent" r="28" stroke="currentColor" stroke-width="4"></circle><circle class="text-tertiary" cx="32" cy="32" fill="transparent" r="28" stroke="currentColor" stroke-dasharray="176" stroke-dashoffset="176" stroke-width="4"></circle></svg></div><span class="text-xs font-bold text-on-surface-variant">E-annx</span></div>
+          <div class="flex flex-col items-center" title="Block F"><div class="relative w-16 h-16 mb-2"><svg class="w-full h-full transform -rotate-90"><circle class="text-surface-container-highest" cx="32" cy="32" fill="transparent" r="28" stroke="currentColor" stroke-width="4"></circle><circle class="text-tertiary" cx="32" cy="32" fill="transparent" r="28" stroke="currentColor" stroke-dasharray="176" stroke-dashoffset="176" stroke-width="4"></circle></svg></div><span class="text-xs font-bold text-on-surface-variant">F</span></div>
+          <div class="flex flex-col items-center" title="Block G"><div class="relative w-16 h-16 mb-2"><svg class="w-full h-full transform -rotate-90"><circle class="text-surface-container-highest" cx="32" cy="32" fill="transparent" r="28" stroke="currentColor" stroke-width="4"></circle><circle class="text-tertiary" cx="32" cy="32" fill="transparent" r="28" stroke="currentColor" stroke-dasharray="176" stroke-dashoffset="176" stroke-width="4"></circle></svg></div><span class="text-xs font-bold text-on-surface-variant">G</span></div>
+          <div class="flex flex-col items-center" title="Block H"><div class="relative w-16 h-16 mb-2"><svg class="w-full h-full transform -rotate-90"><circle class="text-surface-container-highest" cx="32" cy="32" fill="transparent" r="28" stroke="currentColor" stroke-width="4"></circle><circle class="text-tertiary" cx="32" cy="32" fill="transparent" r="28" stroke="currentColor" stroke-dasharray="176" stroke-dashoffset="176" stroke-width="4"></circle></svg></div><span class="text-xs font-bold text-on-surface-variant">H</span></div>
+          <div class="flex flex-col items-center" title="Block J"><div class="relative w-16 h-16 mb-2"><svg class="w-full h-full transform -rotate-90"><circle class="text-surface-container-highest" cx="32" cy="32" fill="transparent" r="28" stroke="currentColor" stroke-width="4"></circle><circle class="text-tertiary" cx="32" cy="32" fill="transparent" r="28" stroke="currentColor" stroke-dasharray="176" stroke-dashoffset="176" stroke-width="4"></circle></svg></div><span class="text-xs font-bold text-on-surface-variant">J</span></div>
+          <div class="flex flex-col items-center" title="Block S"><div class="relative w-16 h-16 mb-2"><svg class="w-full h-full transform -rotate-90"><circle class="text-surface-container-highest" cx="32" cy="32" fill="transparent" r="28" stroke="currentColor" stroke-width="4"></circle><circle class="text-tertiary" cx="32" cy="32" fill="transparent" r="28" stroke="currentColor" stroke-dasharray="176" stroke-dashoffset="176" stroke-width="4"></circle></svg></div><span class="text-xs font-bold text-on-surface-variant">S</span></div>
+          <div class="flex flex-col items-center" title="RGT"><div class="relative w-16 h-16 mb-2"><svg class="w-full h-full transform -rotate-90"><circle class="text-surface-container-highest" cx="32" cy="32" fill="transparent" r="28" stroke="currentColor" stroke-width="4"></circle><circle class="text-tertiary" cx="32" cy="32" fill="transparent" r="28" stroke="currentColor" stroke-dasharray="176" stroke-dashoffset="176" stroke-width="4"></circle></svg></div><span class="text-xs font-bold text-on-surface-variant">RGT</span></div>
+          <div class="flex flex-col items-center" title="Guest House"><div class="relative w-16 h-16 mb-2"><svg class="w-full h-full transform -rotate-90"><circle class="text-surface-container-highest" cx="32" cy="32" fill="transparent" r="28" stroke="currentColor" stroke-width="4"></circle><circle class="text-tertiary" cx="32" cy="32" fill="transparent" r="28" stroke="currentColor" stroke-dasharray="176" stroke-dashoffset="176" stroke-width="4"></circle></svg></div><span class="text-xs font-bold text-on-surface-variant">Guest</span></div>
         </div>
       </div>
     </section>
@@ -79,13 +84,31 @@
     <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
       <div class="bg-surface-container-lowest rounded-lg p-6 flex flex-col justify-between border border-outline-variant/5">
         <div class="flex justify-between items-start mb-4">
-          <span class="material-symbols-outlined text-primary p-2 bg-primary/10 rounded-full">history</span>
-          <span class="text-[10px] text-on-surface-variant font-bold uppercase tracking-widest">2m ago</span>
+          <span class="material-symbols-outlined text-primary p-2 bg-primary/10 rounded-full">bed</span>
+          <span class="text-[10px] text-on-surface-variant font-bold uppercase tracking-widest">Filter</span>
         </div>
         <div>
-          <p class="text-xs text-on-surface-variant font-bold mb-1">Last Allocation</p>
-          <h3 class="text-xl font-bold font-headline text-on-surface">Block B-402</h3>
-          <p class="text-sm text-on-surface-variant mt-1">Premium Triple</p>
+          <p class="text-xs text-on-surface-variant font-bold mb-2">Room Types</p>
+          <div class="flex flex-wrap gap-1.5">
+            <button class="px-2 py-1 text-[10px] font-bold rounded bg-surface-container-high text-on-surface hover:bg-primary hover:text-on-primary transition-colors">6NAC</button>
+            <button class="px-2 py-1 text-[10px] font-bold rounded bg-surface-container-high text-on-surface hover:bg-primary hover:text-on-primary transition-colors">6AC</button>
+            <button class="px-2 py-1 text-[10px] font-bold rounded bg-surface-container-high text-on-surface hover:bg-primary hover:text-on-primary transition-colors">4NAC</button>
+            <button class="px-2 py-1 text-[10px] font-bold rounded bg-surface-container-high text-on-surface hover:bg-primary hover:text-on-primary transition-colors">4AC</button>
+            <button class="px-2 py-1 text-[10px] font-bold rounded bg-surface-container-high text-on-surface hover:bg-primary hover:text-on-primary transition-colors">3NAC</button>
+            <button class="px-2 py-1 text-[10px] font-bold rounded bg-surface-container-high text-on-surface hover:bg-primary hover:text-on-primary transition-colors">3AC</button>
+            <button class="px-2 py-1 text-[10px] font-bold rounded bg-surface-container-high text-on-surface hover:bg-primary hover:text-on-primary transition-colors">2NAC</button>
+            <button class="px-2 py-1 text-[10px] font-bold rounded bg-surface-container-high text-on-surface hover:bg-primary hover:text-on-primary transition-colors">2AC</button>
+            <button class="px-2 py-1 text-[10px] font-bold rounded bg-surface-container-high text-on-surface hover:bg-primary hover:text-on-primary transition-colors">1NAC</button>
+            <button class="px-2 py-1 text-[10px] font-bold rounded bg-surface-container-high text-on-surface hover:bg-primary hover:text-on-primary transition-colors">1AC</button>
+            <button class="px-2 py-1 text-[10px] font-bold rounded bg-surface-container-high text-on-surface hover:bg-primary hover:text-on-primary transition-colors">6 NAPT</button>
+            <button class="px-2 py-1 text-[10px] font-bold rounded bg-surface-container-high text-on-surface hover:bg-primary hover:text-on-primary transition-colors">5 NAPT</button>
+            <button class="px-2 py-1 text-[10px] font-bold rounded bg-surface-container-high text-on-surface hover:bg-primary hover:text-on-primary transition-colors">4 NAPT</button>
+            <button class="px-2 py-1 text-[10px] font-bold rounded bg-surface-container-high text-on-surface hover:bg-primary hover:text-on-primary transition-colors">3 NAPT</button>
+            <button class="px-2 py-1 text-[10px] font-bold rounded bg-surface-container-high text-on-surface hover:bg-primary hover:text-on-primary transition-colors">2 NAPT</button>
+            <button class="px-2 py-1 text-[10px] font-bold rounded bg-surface-container-high text-on-surface hover:bg-primary hover:text-on-primary transition-colors">4 Apt</button>
+            <button class="px-2 py-1 text-[10px] font-bold rounded bg-surface-container-high text-on-surface hover:bg-primary hover:text-on-primary transition-colors">3 Apt</button>
+            <button class="px-2 py-1 text-[10px] font-bold rounded bg-surface-container-high text-on-surface hover:bg-primary hover:text-on-primary transition-colors">2 Apt</button>
+          </div>
         </div>
       </div>
       <div class="bg-surface-container-lowest rounded-lg p-6 flex flex-col justify-between border border-outline-variant/5">
@@ -102,11 +125,10 @@
       <div class="bg-surface-container-lowest rounded-lg p-6 flex flex-col justify-between border border-outline-variant/5">
         <div class="flex justify-between items-start mb-4">
           <span class="material-symbols-outlined text-tertiary p-2 bg-tertiary/10 rounded-full">bolt</span>
-          <span class="text-[10px] text-on-surface-variant font-bold uppercase tracking-widest">AI Prediction</span>
+          <span class="text-[10px] text-on-surface-variant font-bold uppercase tracking-widest">Your Slot</span>
         </div>
         <div>
-          <p class="text-xs text-on-surface-variant font-bold mb-1">Predicted Slot</p>
-          <h3 class="text-xl font-bold font-headline text-on-surface">Session 4</h3>
+          <h3 class="text-xl font-bold font-headline text-on-surface mt-4">Session 4</h3>
           <p class="text-sm text-on-surface-variant mt-1">Likely 2:30 PM</p>
         </div>
       </div>
@@ -138,6 +160,25 @@
           Refresh List <span class="material-symbols-outlined text-sm">refresh</span>
         </button>
       </div>
+
+      <!-- Block Filter Tabs -->
+      <div class="flex items-center gap-2 overflow-x-auto pb-4 -mb-4 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+        <button class="shrink-0 px-4 py-1.5 rounded-full text-sm font-bold bg-primary text-on-primary transition-colors">All</button>
+        <button class="shrink-0 px-4 py-1.5 rounded-full text-sm font-bold bg-surface-container-high text-on-surface hover:bg-primary-container hover:text-on-primary-container transition-colors">A</button>
+        <button class="shrink-0 px-4 py-1.5 rounded-full text-sm font-bold bg-surface-container-high text-on-surface hover:bg-primary-container hover:text-on-primary-container transition-colors">B</button>
+        <button class="shrink-0 px-4 py-1.5 rounded-full text-sm font-bold bg-surface-container-high text-on-surface hover:bg-primary-container hover:text-on-primary-container transition-colors">C</button>
+        <button class="shrink-0 px-4 py-1.5 rounded-full text-sm font-bold bg-surface-container-high text-on-surface hover:bg-primary-container hover:text-on-primary-container transition-colors">D</button>
+        <button class="shrink-0 px-4 py-1.5 rounded-full text-sm font-bold bg-surface-container-high text-on-surface hover:bg-primary-container hover:text-on-primary-container transition-colors">E</button>
+        <button class="shrink-0 px-4 py-1.5 rounded-full text-sm font-bold bg-surface-container-high text-on-surface hover:bg-primary-container hover:text-on-primary-container transition-colors">E-annex</button>
+        <button class="shrink-0 px-4 py-1.5 rounded-full text-sm font-bold bg-surface-container-high text-on-surface hover:bg-primary-container hover:text-on-primary-container transition-colors">F</button>
+        <button class="shrink-0 px-4 py-1.5 rounded-full text-sm font-bold bg-surface-container-high text-on-surface hover:bg-primary-container hover:text-on-primary-container transition-colors">G</button>
+        <button class="shrink-0 px-4 py-1.5 rounded-full text-sm font-bold bg-surface-container-high text-on-surface hover:bg-primary-container hover:text-on-primary-container transition-colors">H</button>
+        <button class="shrink-0 px-4 py-1.5 rounded-full text-sm font-bold bg-surface-container-high text-on-surface hover:bg-primary-container hover:text-on-primary-container transition-colors">J</button>
+        <button class="shrink-0 px-4 py-1.5 rounded-full text-sm font-bold bg-surface-container-high text-on-surface hover:bg-primary-container hover:text-on-primary-container transition-colors">S</button>
+        <button class="shrink-0 px-4 py-1.5 rounded-full text-sm font-bold bg-surface-container-high text-on-surface hover:bg-primary-container hover:text-on-primary-container transition-colors">RGT</button>
+        <button class="shrink-0 px-4 py-1.5 rounded-full text-sm font-bold bg-surface-container-high text-on-surface hover:bg-primary-container hover:text-on-primary-container transition-colors">Guest House</button>
+      </div>
+
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <!-- Room Card 1 -->
         <a href="room-detail.html" class="bg-surface-container-lowest p-6 rounded-xl flex items-center gap-6 border-l-4 border-l-secondary border border-outline-variant/5 hover:shadow-lg transition-shadow">
@@ -178,19 +219,6 @@
       </div>
     </section>
 
-    <!-- Predictor Teaser -->
-    <section class="soul-gradient rounded-xl p-8 text-on-primary relative overflow-hidden">
-      <div class="z-10 relative md:w-2/3">
-        <h2 class="text-3xl font-headline font-extrabold mb-4">Probability Predictor</h2>
-        <p class="text-on-primary/80 mb-6 font-medium">Our AI analyzes previous years' trends and current real-time data to estimate which rooms you are most likely to get.</p>
-        <a href="predictor.html" class="inline-flex bg-surface-container-lowest text-primary px-8 py-3 rounded-full font-bold shadow-lg items-center gap-2 hover:scale-105 transition-transform active:scale-95">
-          View My Matches <span class="material-symbols-outlined">query_stats</span>
-        </a>
-      </div>
-      <div class="absolute right-0 top-0 h-full w-1/3 opacity-20 flex items-center justify-center">
-        <span class="material-symbols-outlined text-[12rem]">analytics</span>
-      </div>
-    </section>
   </main>
 
   <script src="js/app.js"></script>
