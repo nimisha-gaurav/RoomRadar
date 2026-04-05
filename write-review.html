@@ -192,7 +192,6 @@
   <!-- Firebase SDKs -->
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
 
   <!-- Configuration -->
   <script src="js/firebase-keys.js"></script>
@@ -200,7 +199,6 @@
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
-    const storage = firebase.storage();
 
     // Get Room ID from URL
     const urlParams = new URLSearchParams(window.location.search);
@@ -276,6 +274,44 @@
       });
     }
 
+    // Image Compression Helper
+    const processImage = (file) => {
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = (event) => {
+          const img = new Image();
+          img.src = event.target.result;
+          img.onload = () => {
+            const canvas = document.createElement('canvas');
+            const MAX_WIDTH = 800;
+            const MAX_HEIGHT = 800;
+            let width = img.width;
+            let height = img.height;
+
+            if (width > height) {
+              if (width > MAX_WIDTH) {
+                height *= MAX_WIDTH / width;
+                width = MAX_WIDTH;
+              }
+            } else {
+              if (height > MAX_HEIGHT) {
+                width *= MAX_HEIGHT / height;
+                height = MAX_HEIGHT;
+              }
+            }
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, width, height);
+            
+            // Output as compressed JPEG
+            resolve(canvas.toDataURL('image/jpeg', 0.6));
+          };
+        };
+      });
+    };
+
     // Function to handle the actual submission
     const submitReview = async () => {
       const submitBtn = form.querySelector('button[type="button"]');
@@ -288,17 +324,27 @@
         }
 
         submitBtn.disabled = true;
-        submitBtn.innerHTML = `<span class="material-symbols-outlined animate-spin">sync</span> Uploading...`;
+        submitBtn.innerHTML = `<span class="material-symbols-outlined animate-spin text-sm">sync</span> Processing...`;
         
-        console.log("Submit button clicked! 🚀");
+        console.log(`Starting processing for ${selectedFiles.length} files...`);
         
-        // 1. Upload Photos to Firebase Storage
+        // 1. Process Photos to Base64 (No Storage SDK needed)
         const imageUrls = [];
+        let processCount = 0;
+        
         for (const file of selectedFiles) {
-          const storageRef = storage.ref(`review_photos/${Date.now()}_${file.name}`);
-          const snapshot = await storageRef.put(file);
-          const url = await snapshot.ref.getDownloadURL();
-          imageUrls.push(url);
+          processCount++;
+          submitBtn.innerHTML = `<span class="material-symbols-outlined animate-spin text-sm">sync</span> Shrinking (${processCount}/${selectedFiles.length})...`;
+          
+          try {
+            console.log(`Processing file ${processCount}: ${file.name}`);
+            const base64Img = await processImage(file);
+            imageUrls.push(base64Img);
+            console.log(`File ${processCount} compressed.`);
+          } catch (processError) {
+            console.error(`Error processing file ${file.name}:`, processError);
+            throw new Error(`Failed to process "${file.name}": ${processError.message}`);
+          }
         }
 
         // 2. Get all form values

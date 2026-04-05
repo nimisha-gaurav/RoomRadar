@@ -158,6 +158,10 @@
 
     document.querySelector('h2').textContent = `Block ${ROOM_ID}`;
 
+    let allReviews = [];
+    let currentReviewIndex = -1;
+    let currentImgIndex = 0;
+
     const updateRatings = (reviews) => {
       const count = reviews.length;
       if (count === 0) {
@@ -204,25 +208,26 @@
     };
 
     const renderReviews = (reviews) => {
-      if (reviews.length === 0) {
+      allReviews = reviews;
+      const sortedReviews = [...reviews].sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+      
+      if (sortedReviews.length === 0) {
         reviewsContainer.innerHTML = `
-          <div class="bg-surface-container-low p-8 rounded-xl text-center border border-dashed border-outline-variant">
-            <span class="material-symbols-outlined text-4xl text-on-surface-variant mb-2">rate_review</span>
-            <p class="font-bold text-on-surface">No reviews yet</p>
-            <p class="text-sm text-on-surface-variant">Be the first to share your experience!</p>
+          <div class="py-12 text-center bg-surface-container-low rounded-2xl border border-dashed border-outline-variant/20">
+            <span class="material-symbols-outlined text-4xl text-on-surface-variant/20 mb-2">rate_review</span>
+            <p class="text-on-surface-variant font-medium">No reviews yet. Be the first!</p>
           </div>
         `;
         return;
       }
 
-      const sortedReviews = [...reviews].sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
-
-      reviewsContainer.innerHTML = sortedReviews.map(r => {
+      reviewsContainer.innerHTML = sortedReviews.map((r, index) => {
         const isAnonymous = r.postAs && r.postAs.includes("Anonymous");
         const hasImages = r.images && r.images.length > 0;
         
         return `
-          <div class="bg-surface-container-lowest p-6 rounded-xl relative border border-outline-variant/10 shadow-sm transition-all hover:border-primary/20 ${hasImages ? 'cursor-pointer' : ''}" onclick="${hasImages ? 'toggleReviewOverlay(this)' : ''}">
+          <div class="bg-surface-container-lowest p-6 rounded-xl relative border border-outline-variant/10 shadow-sm transition-all hover:border-primary/20 ${hasImages ? 'cursor-pointer' : ''}" 
+               onclick="${hasImages ? `toggleReviewOverlay(${index})` : ''}">
             ${isAnonymous ? `
               <div class="absolute -top-3 -right-2">
                 <div class="bg-tertiary-container text-on-tertiary-container px-3 py-1 rounded-lg text-[10px] font-bold uppercase shadow-sm">Anonymous</div>
@@ -233,16 +238,16 @@
                 <span class="material-symbols-outlined">${isAnonymous ? 'person' : 'account_circle'}</span>
               </div>
               <div>
-                <p class="font-bold text-sm text-on-surface">${isAnonymous ? 'Verified Resident' : r.postAs.replace('Publicly as ', '')}</p>
+                <p class="font-bold text-sm text-on-surface">${isAnonymous ? 'Verified Resident' : (r.postAs || '').replace('Publicly as ', '')}</p>
                 <p class="text-xs text-on-surface-variant">${r.stayDuration || 'Recent Stay'}</p>
               </div>
               <div class="ml-auto bg-primary/5 text-primary px-2 py-0.5 rounded flex items-center gap-1 text-[10px] font-bold">
                 <span class="material-symbols-outlined text-[10px]" style="font-variation-settings: 'FILL' 1;">star</span>
-                ${r.overallRating}.0
+                ${r.overallRating || 0}.0
               </div>
             </div>
             <p class="text-on-surface leading-relaxed text-sm mb-4">
-              "${r.reviewText}"
+              "${r.reviewText || ''}"
             </p>
             ${hasImages ? `
               <div class="flex gap-2 overflow-x-auto pb-1 mt-2 no-scrollbar">
@@ -271,12 +276,101 @@
       });
     };
 
-    window.toggleReviewOverlay = (el) => {
-      console.log("Review chunk clicked");
+    // LIGHTBOX LOGIC
+    const lightbox = document.getElementById('review-lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const lightboxCounter = document.getElementById('lightbox-counter');
+    const prevBtn = document.getElementById('lightbox-prev');
+    const nextBtn = document.getElementById('lightbox-next');
+
+    window.toggleReviewOverlay = (index) => {
+      const sortedReviews = [...allReviews].sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+      const review = sortedReviews[index];
+      if (!review || !review.images || review.images.length === 0) return;
+
+      currentReviewIndex = index;
+      currentImgIndex = 0;
+      
+      updateLightboxContent(review);
+      
+      lightbox.classList.remove('hidden');
+      lightbox.classList.add('flex');
+      
+      gsap.fromTo(lightboxImg, 
+        { scale: 0.8, opacity: 0 }, 
+        { scale: 1, opacity: 1, duration: 0.4, ease: "back.out(1.7)" }
+      );
     };
+
+    const updateLightboxContent = (review) => {
+      const images = review.images;
+      lightboxImg.src = images[currentImgIndex];
+      lightboxCounter.textContent = `${currentImgIndex + 1} / ${images.length}`;
+      
+      // Show/Hide Nav
+      if (images.length > 1) {
+        prevBtn.classList.remove('hidden');
+        nextBtn.classList.remove('hidden');
+      } else {
+        prevBtn.classList.add('hidden');
+        nextBtn.classList.add('hidden');
+      }
+    };
+
+    window.closeLightbox = () => {
+      gsap.to(lightboxImg, {
+        scale: 0.8,
+        opacity: 0,
+        duration: 0.2,
+        onComplete: () => {
+          lightbox.classList.add('hidden');
+          lightbox.classList.remove('flex');
+        }
+      });
+    };
+
+    window.nextImage = () => {
+      const sortedReviews = [...allReviews].sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+      const review = sortedReviews[currentReviewIndex];
+      currentImgIndex = (currentImgIndex + 1) % review.images.length;
+      updateLightboxContent(review);
+    };
+
+    window.prevImage = () => {
+      const sortedReviews = [...allReviews].sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+      const review = sortedReviews[currentReviewIndex];
+      currentImgIndex = (currentImgIndex - 1 + review.images.length) % review.images.length;
+      updateLightboxContent(review);
+    };
+
+    // Close on Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeLightbox();
+    });
 
     loadData();
   </script>
+  
+  <!-- Image Lightbox Overlay -->
+  <div id="review-lightbox" class="fixed inset-0 z-[100] hidden items-center justify-center bg-surface/60 backdrop-blur-2xl p-4 md:p-10 select-none">
+    <button onclick="closeLightbox()" class="absolute top-6 right-6 w-12 h-12 rounded-full bg-surface-container-highest text-on-surface flex items-center justify-center transition-transform active:scale-95 z-20">
+      <span class="material-symbols-outlined">close</span>
+    </button>
+
+    <button id="lightbox-prev" onclick="prevImage()" class="absolute left-6 w-12 h-12 rounded-full bg-surface-container-highest/50 text-on-surface flex items-center justify-center transition-all hover:bg-surface-container-highest active:scale-90 z-20">
+      <span class="material-symbols-outlined">chevron_left</span>
+    </button>
+
+    <div class="relative max-w-4xl w-full h-full flex flex-col items-center justify-center gap-4">
+      <img id="lightbox-img" src="" class="max-w-full max-h-[80vh] object-contain rounded-2xl shadow-2xl border border-outline-variant/10" />
+      <div id="lightbox-counter" class="bg-surface-container-highest px-4 py-1.5 rounded-full text-xs font-bold tracking-widest text-on-surface-variant border border-outline-variant/10">1 / 1</div>
+    </div>
+
+    <button id="lightbox-next" onclick="nextImage()" class="absolute right-6 w-12 h-12 rounded-full bg-surface-container-highest/50 text-on-surface flex items-center justify-center transition-all hover:bg-surface-container-highest active:scale-90 z-20">
+      <span class="material-symbols-outlined">chevron_right</span>
+    </button>
+  </div>
+
   <script src="js/app.js"></script>
 </body>
 </html>
