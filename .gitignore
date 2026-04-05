@@ -2,6 +2,7 @@
 
 # Sensitive Firebase Keys (IMPORTANT: Never push this)
 js/firebase-config-keys.js
+js/firebase-keys.js
 
 # OS Files
 .DS_Store
